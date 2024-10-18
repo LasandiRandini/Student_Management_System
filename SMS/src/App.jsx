@@ -16,6 +16,7 @@ import Report from "./admin_pages/reports";
 import Student from "./admin_pages/student_mng";
 import S_Dashboard from "./student_pages/s_dashboard";
 import S_Navbar from "./components/s_navbar";
+import S_Courses from "./student_pages/my_courses";
 
 const AdminLayout = () => {
   const navbarHeight = "60px";
@@ -119,7 +120,10 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <StudentLayout />,
-    children: [{ path: "/s_dashboard", element: <S_Dashboard /> }],
+    children: [{ path: "/s_dashboard", element: <S_Dashboard /> },
+    {path: "my_courses", element: <S_Courses /> },
+    ]
+    ,
   },
   {
     path: "/",
