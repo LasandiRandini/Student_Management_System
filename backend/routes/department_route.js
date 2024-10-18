@@ -1,8 +1,9 @@
 import express from "express"
-import { createDepartment } from "../controllers/department_controller.js"
+import { getDepartment,createDepartment  } from "../controllers/department_controller.js"
 
 const router = express.Router();
 
-router.post("/department", createDepartment);
+router.get("/getdepartment", getDepartment);
+router.post("/createdepartment", createDepartment);
 
 export default router;
