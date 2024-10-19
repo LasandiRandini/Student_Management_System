@@ -1,16 +1,55 @@
 
 import { useState } from 'react';
+import axios from 'axios';
 import logo from '../assets/SLT_logo_w.png';
 import image1 from '../assets/image1.png';
+import { useNavigate } from 'react-router-dom'; // For navigation
 
 const Login = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-
-  const handleSubmit = (e) => {
+  const [email, setEmail] = useState(''); // For email input
+  const [password, setPassword] = useState(''); // For password input
+  const [errorMessage, setErrorMessage] = useState(''); // For error messages
+  const navigate = useNavigate(); // Initialize navigation
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Login submitted:', { email, password });
+  
+    try {
+      const response = await axios.post('http://localhost:8080/api/students/slogin', { username: email, password });
+      console.log(response); // Log the response
+      localStorage.setItem('token', response.data.token); 
+      localStorage.setItem('user', JSON.stringify(response.data.user));
+      navigate('/s_dashboard');
+    } catch (error) {
+      if (error.response && error.response.data) {
+        setErrorMessage(error.response.data.message || "Invalid login credentials");
+      } else {
+        setErrorMessage("Something went wrong. Please try again.");
+      }
+    }
   };
+  
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+
+  //   try {
+  //     const response = await axios.post('http://localhost:8080/api/students/slogin', { username: email, password });
+  //     // Save the JWT token in localStorage
+  //     localStorage.setItem('token', response.data.token); 
+      
+  //     // Save the user data if necessary
+  //     localStorage.setItem('user', JSON.stringify(response.data.user));
+
+  //     // Redirect to dashboard on successful login
+  //     navigate('/s_dashboard');
+  //   } catch (error) {
+  //     // Handle error response from the backend
+  //     if (error.response && error.response.data) {
+  //       setErrorMessage(error.response.data.message || "Invalid login credentials");
+  //     } else {
+  //       setErrorMessage("Something went wrong. Please try again.");
+  //     }
+  //   }
+  // };
 
   return (
     <div className="flex h-screen">
@@ -29,7 +68,7 @@ const Login = () => {
           <h1 className="text-4xl font-bold mb-4">Welcome to SLT Mobitel</h1>
           <button
             className="border border-white px-6 py-2 rounded-full"
-            onClick={() => window.location.href = '/'}  // Navigate to registration
+            onClick={() => window.location.href = '/s_dashboard'}  // Navigate to registration
           >
             Sign up
           </button>
@@ -71,10 +110,17 @@ const Login = () => {
             <button
               type="submit"
               className="w-full bg-green-500 text-white py-2 rounded-lg hover:bg-green-700"
-              onClick={() => window.location.href = '/dashboard'}
             >
               Login
             </button>
+
+            {/* Display error message */}
+            {errorMessage && (
+              <div className="mt-4 text-red-500 text-center">
+                {errorMessage}
+              </div>
+            )}
+
             <div className="text-center mt-4">
               <p className="text-gray-500">or continue with</p>
               <div className="flex justify-center space-x-4 mt-4">
@@ -87,7 +133,6 @@ const Login = () => {
               </div>
             </div>
           </form>
-          {/* Add navigation link to the registration page */}
           <div className="text-center mt-6">
             <p className="text-gray-500">
               Don’t have an account? <a href="/" className="text-blue-500">Register</a>

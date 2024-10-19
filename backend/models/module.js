@@ -35,6 +35,7 @@ const moduleSchema = new mongoose.Schema({
     ref: "Department",
     required: true,
   },
+  
   students: [{ type: mongoose.Schema.Types.ObjectId, ref: "Student" }],
 });
 
