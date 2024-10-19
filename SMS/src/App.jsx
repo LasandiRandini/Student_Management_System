@@ -131,7 +131,8 @@ const router = createBrowserRouter([
     children: [
       { path: "/dashboard", element: <Dashboardpage /> },
       { path: "/departments", element: <Department /> },
-      { path: "/course", element: <Course /> },
+      // { path: "/course", element: <Course /> },
+      { path: "/courses/:departmentId/:level", element: <Course /> },
       { path: "/reports", element: <Report /> },
       { path: "/student_mng", element: <Student /> },
       { path: "/subcourse", element: <SubCourse /> },
