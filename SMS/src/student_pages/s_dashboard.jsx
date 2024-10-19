@@ -1,21 +1,32 @@
 
 
-import  { useState } from 'react';
+import  { useState,useEffect } from 'react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import { FaSearch } from 'react-icons/fa';
 
 const Dashboard = () => {
   const [date, setDate] = useState(new Date());
+  const [user, setUser] = useState({});
 
+  // Fetch user data from localStorage and set it
+  useEffect(() => {
+    const storedUser = JSON.parse(localStorage.getItem("user") || "{}");
+    if (storedUser && storedUser.first_name && storedUser.last_name) {
+      setUser(storedUser);
+    }
+  }, []);
   return (
     <div className="min-h-screen bg-gradient-to-r from-[#0F407B] to-[#24AF77] p-6">
       
 
       {/* Welcome Section */}
       <div className="mt-6 mb-8 text-3xl font-bold text-white">
-        Hi, 2121 – JOHN FERNANDO! 👋
+        Hi, {user.first_name?.toUpperCase()} {user.last_name?.toUpperCase()}! 👋
       </div>
+      {/* <div className="mt-6 mb-8 text-3xl font-bold text-white">
+        Hi, 2121 – JOHN FERNANDO! 👋
+      </div> */}
 
       {/* Main Content - Grid Layout */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">

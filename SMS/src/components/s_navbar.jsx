@@ -1,9 +1,22 @@
 
 
+
+import  {useState,useEffect } from 'react';
 import { FiMenu, FiUser } from "react-icons/fi";
 import SLT from "../assets/SLT_logo_b.png";
 
+
 const S_Navbar = () => {
+
+  const [user, setUser] = useState({});
+
+// Fetch user data from localStorage and set it
+useEffect(() => {
+  const storedUser = JSON.parse(localStorage.getItem("user") || "{}");
+  if (storedUser && storedUser.first_name && storedUser.last_name) {
+    setUser(storedUser);
+  }
+}, []); 
   return (
     <nav className="bg-blue-100 shadow-lg">
       <div className="max-w-ful mx-auto px-8">
@@ -26,7 +39,10 @@ const S_Navbar = () => {
           {/* User Profile Section - Right */}
           <div className="flex items-center space-x-4">
             <FiUser className="text-3xl  text-gray-600" />
-            <span className="text-gray-700 font-bold">John Fernando</span>
+            <div className="mt-2  text-1xl font-bold text-blak">
+        Hi, {user.first_name?.toUpperCase()} {user.last_name?.toUpperCase()}
+      </div>
+            
             <FiMenu className="text-2xl md:hidden" />
           </div>
         </div>

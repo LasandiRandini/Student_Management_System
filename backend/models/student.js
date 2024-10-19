@@ -10,6 +10,8 @@ const studentSchema = new mongoose.Schema({
   level: { type: Number, required: true },
   username: { type: String, required: true },
   password: { type: String, required: true },
+  isVerified: { type: Boolean, default: false }, // New field for verification
+  
   // Many-to-Many: A student can be enrolled in many modules
   modules: [{ type: mongoose.Schema.Types.ObjectId, ref: "Module" }]
 });

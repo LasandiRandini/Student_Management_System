@@ -1,48 +1,4 @@
-// import { Student } from "../models/student.js";
-// import bcrypt from "bcryptjs";
-// import Jwt from "jsonwebtoken";
 
-// export const sregister = async (req, res) => {
-//   const { first_name, last_name, birth_day, contact_no, email, department, level, username, password } = req.body;
-
-//   try {
-//     // Check if student or username already exists
-//     const existingStudent = await Student.findOne({ $or: [{ email }, { username }] });
-//     if (existingStudent) return res.status(409).json("Student already exists!");
-
-//     // Hash the password
-//     const salt = bcrypt.genSaltSync(10);
-//     const hash = bcrypt.hashSync(password, salt);
-
-//     // Create a new student
-//     const newStudent = new Student({
-//       first_name,
-//       last_name,
-//       birth_day,
-//       contact_no,
-//       email,
-//       department,
-//       level,
-//       username,
-//       password: hash,
-//     });
-
-//     // Save the new student to the database
-//     await newStudent.save();
-
-//     // Generate JWT token
-//     const token = Jwt.sign({ id: newStudent._id }, "jwkey", { expiresIn: "1h" });
-
-//     // Send token as HTTP-only cookie and return student data (excluding password)
-//     const { password: _, ...studentData } = newStudent._doc; // Exclude the password
-//     res
-//       .cookie("access_token", token, { httpOnly: true })
-//       .status(200)
-//       .json({ message: "Student registered successfully!", student: studentData });
-//   } catch (err) {
-//     return res.status(500).json(err);
-//   }
-// };
 
 import { Student } from "../models/student.js";
 import bcrypt from "bcryptjs";
@@ -103,6 +59,10 @@ export const slogin = async (req, res) => {
     const student = await Student.findOne({ username });
     if (!student) return res.status(404).json("Student not found!");
 
+    // Check if the student is verified
+    if (!student.isVerified) {
+      return res.status(403).json("Your account is not verified yet.");
+    }
     // Check if the password is correct
     const isPasswordCorrect = bcrypt.compareSync(password, student.password);
     if (!isPasswordCorrect) return res.status(400).json("Wrong username or password!");
@@ -118,5 +78,34 @@ export const slogin = async (req, res) => {
       .json(other);
   } catch (err) {
     return res.status(500).json(err);
+  }
+};
+
+
+export const getStudent = async (req, res) => {
+  try {
+    const students = await Student.find().populate('modules');
+    if (!students || students.length === 0) {
+      return res.status(404).json({ message: 'No students found' });
+    }
+    res.json(students);
+  } catch (error) {
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
+export const verifyStudent = async (req, res) => {
+  try {
+    const student = await Student.findById(req.params.id);
+    if (!student) {
+      return res.status(404).json({ message: 'Student not found' });
+    }
+
+    student.isVerified = true;
+    await student.save();
+
+    res.json({ message: 'Student verified successfully', student });
+  } catch (error) {
+    res.status(500).json({ message: 'Server error', error });
   }
 };
