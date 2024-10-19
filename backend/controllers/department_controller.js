@@ -39,3 +39,13 @@ export const getDepartmentById = async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 };
+
+
+export const getdepartmentnames = async (req, res) => {
+  try {
+    const departments = await Department.find({});
+    res.json(departments);
+  } catch (error) {
+    res.status(500).json({ message: 'Failed to retrieve departments' });
+  }
+};

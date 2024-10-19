@@ -245,6 +245,7 @@ const TableComponent = () => {
                 <th className="border border-gray-300 p-2">Email</th>
                 <th className="border border-gray-300 p-2">Birth Day</th>
                 <th className="border border-gray-300 p-2">Department</th>
+                <th className="border border-gray-300 p-2">Current Level</th>
                 <th className="border border-gray-300 p-2">Modules</th>
                 <th className="border border-gray-300 p-2">Verification</th>
                 
@@ -259,6 +260,7 @@ const TableComponent = () => {
                   <td className="border border-gray-300 p-2 text-center">{student.email}</td>
                   <td className="border border-gray-300 p-2 text-center">{new Date(student.birth_day).toLocaleDateString()}</td>
                   <td className="border border-gray-300 p-2 text-center">{student.department}</td>
+                  <td className="border border-gray-300 p-2 text-center">{student.level}</td>
                   <td className="border border-gray-300 p-2 text-center">
                     <button
                       className="bg-blue-500 text-white px-2 py-1 rounded"
