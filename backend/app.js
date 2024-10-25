@@ -31,6 +31,7 @@ import dotenv from "dotenv";
 import departmentRoute from "./routes/department_route.js";
 import studentRoute from "./routes/student_route.js";
 import ModuleRoute from "./routes/module_route.js";
+import studentModuleRoute from "./routes/student_module_route.js";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 
@@ -48,6 +49,7 @@ dotenv.config();
 app.use("/api/departments", departmentRoute);
 app.use("/api/students", studentRoute);
 app.use("/api/modules", ModuleRoute);
+app.use("/api/student_modules", studentModuleRoute);
 
 const PORT = process.env.PORT ;
 const MONGO_URL = process.env.MONGO_URL;
