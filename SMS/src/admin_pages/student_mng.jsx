@@ -157,7 +157,7 @@ const TableComponent = () => {
   useEffect(() => {
     const fetchStudents = async () => {
       try {
-        const response = await fetch('http://localhost:8080/api/students/getStudent');
+        const response = await fetch('http://localhost:9090/api/students/getStudent');
         const data = await response.json();
         setStudents(data);
       } catch (error) {
@@ -171,7 +171,7 @@ const TableComponent = () => {
   // Function to verify student
   const verifyStudent = async (studentId) => {
     try {
-      const response = await fetch(`http://localhost:8080/api/students/verify/${studentId}`, {
+      const response = await fetch(`http://localhost:9090/api/students/verify/${studentId}`, {
         method: 'PUT',
       });
 

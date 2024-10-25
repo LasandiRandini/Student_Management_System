@@ -142,7 +142,7 @@ const Login = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    axios.post('http://localhost:8080/api/students/slogin', { username: email, password })
+    axios.post('http://localhost:9090/api/students/slogin', { username: email, password })
       .then((response) => {
         console.log(response);
         localStorage.setItem('token', response.data.access_token); // Store the token

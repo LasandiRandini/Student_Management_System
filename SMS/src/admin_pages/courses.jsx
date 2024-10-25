@@ -14,7 +14,7 @@ const AddModule = () => {
   
   const fetchDepartmentName = async () => {
     try {
-      const response = await axios.get(`http://localhost:8080/api/departments/getdepname/${departmentId}`);
+      const response = await axios.get(`http://localhost:9090/api/departments/getdepname/${departmentId}`);
       setDepartmentName(response.data.name); 
     } catch (error) {
       console.error("Error fetching department name: ", error);
@@ -24,28 +24,25 @@ const AddModule = () => {
  
   const fetchModules = async () => {
     try {
-      const response = await axios.get(`http://localhost:8080/api/modules/getmodule/${departmentId}/${level}`);
+      const response = await axios.get(`http://localhost:9090/api/modules/getmodule/${departmentId}/${level}`);
       setModules(response.data);
     } catch (error) {
       console.error("Error fetching modules: ", error);
     }
   };
 
-  // useEffect(() => {
-  //   fetchDepartmentName(); 
-  //   fetchModules(); 
-  // }, [departmentId, level]);
+ 
   useEffect(() => {
-    console.log("Department ID:", departmentId, "Level:", level); // Debugging purpose
+    console.log("Department ID:", departmentId, "Level:", level); 
     fetchDepartmentName();
     fetchModules();
-  }, [departmentId, level]);
+  });
   
   
   const handleAddModule = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:8080/api/modules/createmodule', {
+      const response = await axios.post('http://localhost:9090/api/modules/createmodule', {
         name: moduleName,
         credits: moduleCredits,
         lecturer: moduleLecturer,
@@ -83,7 +80,9 @@ const AddModule = () => {
               key={module._id}
               className="bg-white shadow-md rounded-lg p-4 flex flex-col items-center"
             >
+            <h3 className="text-lg font-semibold">{module.courseCode}</h3>
               <h3 className="text-lg font-semibold">{module.name}</h3>
+
               <p className="text-gray-500">Credits: {module.credits}</p>
               <p className="text-gray-500">Lecturer: {module.lecturer}</p>
 

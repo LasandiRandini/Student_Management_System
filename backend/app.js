@@ -35,6 +35,7 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 
 
+
 const app = express();
 
 app.use(cors());
@@ -48,7 +49,7 @@ app.use("/api/departments", departmentRoute);
 app.use("/api/students", studentRoute);
 app.use("/api/modules", ModuleRoute);
 
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT ;
 const MONGO_URL = process.env.MONGO_URL;
 
 // Connect to MongoDB and start the server

@@ -1,7 +1,10 @@
-// import { useState } from 'react';
+
+
+// import { useState, useEffect } from 'react';
 // import logo from '../assets/SLT_logo_w.png';  
 // import image2 from '../assets/image2.png'; 
 // import axios from 'axios'; 
+// import Swal from 'sweetalert2';
 
 // const Registration = () => {
 //     const [formData, setFormData] = useState({
@@ -17,8 +20,10 @@
 //       confirmPassword: '',
 //     });
 
-//     const [error, setError] = useState(''); // State for error messages
-//     const [successMessage, setSuccessMessage] = useState(''); // State for success message
+//     const [error, setError] = useState(''); 
+//     const [successMessage, setSuccessMessage] = useState(''); 
+//     const [departments, setDepartments] = useState([]); 
+  
 
 //     const handleChange = (e) => {
 //       setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -33,8 +38,7 @@
 //       }
 
 //       try {
-//         // Make API call to register student
-//         const response = await axios.post('http://localhost:8080/api/students/sregister', {
+//         const response = await axios.post('http://localhost:9090/api/students/sregister', {
 //           first_name: formData.first_name,
 //           last_name: formData.last_name,
 //           birth_day: formData.birth_day,
@@ -48,7 +52,6 @@
 
 //         setSuccessMessage(response.data.message);
 //         setError('');
-//         // Clear form data if needed
 //         setFormData({
 //           first_name: '',
 //           last_name: '',
@@ -61,12 +64,32 @@
 //           password: '',
 //           confirmPassword: '',
 //         });
+//         Swal.fire({
+//           title: 'Registration Successful!',
+//           text: 'You will receive an email after verifying your details.',
+//           icon: 'success',
+//           confirmButtonText: 'OK'
+//         });
 
 //       } catch (err) {
 //         setError(err.response?.data || "Registration failed. Please try again.");
 //         setSuccessMessage('');
 //       }
 //     };
+
+   
+//     useEffect(() => {
+//       const fetchDepartments = async () => {
+//         try {
+//           const response = await axios.get('http://localhost:9090/api/departments/getdepartmentnames');
+//           setDepartments(response.data);
+//         } catch (error) {
+//           console.error("Failed to fetch departments:", error);
+//         }
+//       };
+
+//       fetchDepartments();
+//     }, []);
 
 //     return (
 //       <div className="flex h-screen flex-col md:flex-row">
@@ -105,7 +128,7 @@
 //                 <div className="mb-1">
 //                   <label className="block text-gray-700 mb-2">Birth Day</label>
 //                   <input
-//                     type="date" // Updated to date input
+//                     type="date" 
 //                     name="birth_day"
 //                     value={formData.birth_day}
 //                     onChange={handleChange}
@@ -139,26 +162,32 @@
 
 //                 <div className="mb-1">
 //                   <label className="block text-gray-700 mb-2">Department</label>
-//                   <input
-//                     type="text"
+//                   <select
 //                     name="department"
-//                     placeholder="Enter your Department"
 //                     value={formData.department}
 //                     onChange={handleChange}
 //                     className="w-full px-4 py-2 border border-gray-300 rounded-lg"
-//                   />
+//                   >
+//                     <option value="">Select a Department</option>
+//                     {departments.map((dept) => (
+//                       <option key={dept._id} value={dept.name}>{dept.name}</option>
+//                     ))}
+//                   </select>
 //                 </div>
 
 //                 <div className="mb-1">
 //                   <label className="block text-gray-700 mb-2">Level</label>
-//                   <input
-//                     type="text"
+//                   <select
 //                     name="level"
-//                     placeholder="Enter your Level"
 //                     value={formData.level}
 //                     onChange={handleChange}
 //                     className="w-full px-4 py-2 border border-gray-300 rounded-lg"
-//                   />
+//                   >
+//                     <option value="">Select a Level</option>
+//                     {[1, 2, 3, 4].map((level) => (
+//                       <option key={level} value={level}>{level}</option>
+//                     ))}
+//                   </select>
 //                 </div>
 
 //                 <div className="mb-1">
@@ -213,10 +242,10 @@
 //           className="hidden md:flex w-1/2 bg-cover bg-center relative"
 //           style={{ backgroundImage: `url(${image2})` }} 
 //         >
-//           {/* Gradient overlay */}
+          
 //           <div className="absolute inset-0 bg-gradient-to-b from-[#0F407B] to-[#24AF77] opacity-70">
 //             <div className="flex flex-col justify-center items-center h-full bg-black bg-opacity-50 text-white p-8">
-//               {/* Logo */}
+             
 //               <img src={logo} alt="SLT Mobitel" className="mb-8 w-64" />  
 //               <h1 className="text-4xl font-bold mb-4">Welcome to SLT Mobitel</h1>
 //               <p className="text-lg mb-6">The Connection</p>
@@ -240,6 +269,7 @@ import logo from '../assets/SLT_logo_w.png';
 import image2 from '../assets/image2.png'; 
 import axios from 'axios'; 
 import Swal from 'sweetalert2';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 
 const Registration = () => {
     const [formData, setFormData] = useState({
@@ -259,7 +289,7 @@ const Registration = () => {
     const [successMessage, setSuccessMessage] = useState(''); 
     const [departments, setDepartments] = useState([]); 
   
-
+    const navigate = useNavigate(); // Initialize useNavigate
     const handleChange = (e) => {
       setFormData({ ...formData, [e.target.name]: e.target.value });
     };
@@ -273,7 +303,7 @@ const Registration = () => {
       }
 
       try {
-        const response = await axios.post('http://localhost:8080/api/students/sregister', {
+        const response = await axios.post('http://localhost:9090/api/students/sregister', {
           first_name: formData.first_name,
           last_name: formData.last_name,
           birth_day: formData.birth_day,
@@ -306,8 +336,13 @@ const Registration = () => {
           confirmButtonText: 'OK'
         });
 
+     
+           navigate('/slogin'); 
+
       } catch (err) {
-        setError(err.response?.data || "Registration failed. Please try again.");
+        // Access error message safely and ensure it's a string
+        const errorMessage = err.response?.data?.message || "Registration failed. Please try again.";
+        setError(errorMessage);
         setSuccessMessage('');
       }
     };
@@ -316,7 +351,7 @@ const Registration = () => {
     useEffect(() => {
       const fetchDepartments = async () => {
         try {
-          const response = await axios.get('http://localhost:8080/api/departments/getdepartmentnames');
+          const response = await axios.get('http://localhost:9090/api/departments/getdepartmentnames');
           setDepartments(response.data);
         } catch (error) {
           console.error("Failed to fetch departments:", error);

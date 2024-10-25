@@ -1,4 +1,4 @@
-// models/StudentModule.js
+
 import mongoose from "mongoose";
 
 const StudentModuleSchema = new mongoose.Schema({

@@ -144,7 +144,7 @@ const Department = () => {
 
   const fetchDepartments = async () => {
     try {
-      const response = await axios.get('http://localhost:8080/api/departments/getdepartment');
+      const response = await axios.get('http://localhost:9090/api/departments/getdepartment');
       setDepartments(response.data); 
     } catch (error) {
       console.error("Error fetching departments: ", error);
