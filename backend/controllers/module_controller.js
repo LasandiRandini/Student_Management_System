@@ -1,5 +1,6 @@
 import { Module } from "../models/module.js";
-import { Department } from "../models/department.js"; 
+import { Department } from "../models/department.js";
+import { Student } from "../models/student.js";
 
 export const createModule = async (req, res) => {
   const { name, credits, departmentId, lecturer, level } = req.body;
@@ -91,5 +92,25 @@ export const getModule = async (req, res) => {
       res.status(200).json(modules);
     } catch (error) {
       res.status(400).json({ error: error.message });
+    }
+  };
+
+
+
+  export const searchModule = async (req, res) => {
+    try {
+      const { moduleName } = req.params;
+      const module = await Module.findOne({ name: moduleName }).populate("students");
+  
+      if (!module) return res.status(404).json({ error: "Module not found" });
+  
+      const studentCount = module.students.length;
+  
+      res.json({
+        module: module.name,
+        studentCount,
+      });
+    } catch (error) {
+      res.status(500).json({ error: "Error searching module" });
     }
   };

@@ -1,4 +1,6 @@
 import { Department } from "../models/department.js"
+import { Student } from "../models/student.js";
+import { Module } from "../models/module.js";
   
 export const createDepartment = async (req, res) => {
   const { name, headOfDepartment } = req.body;
@@ -47,5 +49,46 @@ export const getdepartmentnames = async (req, res) => {
     res.json(departments);
   } catch (error) {
     res.status(500).json({ message: 'Failed to retrieve departments' });
+  }
+};
+
+
+
+
+// Get total counts for departments, students, and modules
+export const getDashboardMetrics = async (req, res) => {
+  try {
+    const totalDepartments = await Department.countDocuments();
+    const totalStudents = await Student.countDocuments();
+    const totalModules = await Module.countDocuments();
+    
+    res.json({
+      totalDepartments,
+      totalStudents,
+      totalModules,
+    });
+  } catch (error) {
+    res.status(500).json({ error: "Error fetching dashboard metrics" });
+  }
+};
+
+// Search for department details, including student and course counts
+export const searchDepartment = async (req, res) => {
+  try {
+    const { departmentName } = req.params;
+    const department = await Department.findOne({ name: departmentName }).populate("modules");
+
+    if (!department) return res.status(404).json({ error: "Department not found" });
+
+    const studentCount = await Student.countDocuments({ department: departmentName });
+    const courseCount = department.modules.length;
+
+    res.json({
+      department: department.name,
+      studentCount,
+      courseCount,
+    });
+  } catch (error) {
+    res.status(500).json({ error: "Error searching department" });
   }
 };

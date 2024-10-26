@@ -9,3 +9,4 @@ router.delete("/:studentId/unenroll/:moduleId", unenrollStudentFromModule);
 router.get("/search", searchCourses);
 
 export default router;
+

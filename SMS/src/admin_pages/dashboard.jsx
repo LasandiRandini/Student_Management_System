@@ -1,72 +1,91 @@
+import { useEffect, useState } from "react";
+import axios from "axios";
 
+export default function Dashboard() {
+  const [metrics, setMetrics] = useState({});
+  const [departmentSearch, setDepartmentSearch] = useState("");
+  const [moduleSearch, setModuleSearch] = useState("");
+  const [departmentData, setDepartmentData] = useState(null);
+  const [moduleData, setModuleData] = useState(null);
 
-const Dashboard = () => {
-    return (
-      <div className="p-6 bg-customColor h-screen">
-       
-       <div className="flex space-x-3 bg-[#49B558] text-white p-3 mb-5 rounded-t-lg rounded-b-lg">
-          <h1><b>Dashboard</b></h1>
+  // Fetch total metrics
+  useEffect(() => {
+    axios.get("http://localhost:9090/api/dashboard/dashboardMetrics").then((response) => {
+      setMetrics(response.data);
+    });
+  }, []);
+
+  // Search for department
+  const handleDepartmentSearch = () => {
+    axios.get(`http://localhost:9090/api/dashboard/searchDepartment/${departmentSearch}`).then((response) => {
+      setDepartmentData(response.data);
+    }).catch(() => setDepartmentData(null));
+  };
+
+  // Search for module
+  const handleModuleSearch = () => {
+    axios.get(`http://localhost:9090/api/dashboard/searchModule/${moduleSearch}`).then((response) => {
+      setModuleData(response.data);
+    }).catch(() => setModuleData(null));
+  };
+
+  return (
+    <div className="p-8 space-y-8">
+      <h1 className="text-2xl font-bold">Dashboard</h1>
+      
+      <div className="grid grid-cols-3 gap-6">
+        <div className="p-4 bg-white shadow rounded-lg">
+          <h2 className="text-lg font-semibold">Total Students</h2>
+          <p className="text-2xl">{metrics.totalStudents}</p>
         </div>
-  
-   
-        <div className="mb-6">
-          <h2 className="text-lg font-semibold mb-2">Crucial Incidents</h2>
-          <div className=" grid grid-cols-4 gap-4">
-           
-            <IncidentCard  status="Assigned" date="2024/10/01" />
-            <IncidentCard status="Assigned" date="2024/10/01" />
-            <IncidentCard status="Not Assigned" date="2024/10/01" />
-            <IncidentCard status="Completed" date="2024/10/01" />
-          </div>
+        <div className="p-4 bg-white shadow rounded-lg">
+          <h2 className="text-lg font-semibold">Total Departments</h2>
+          <p className="text-2xl">{metrics.totalDepartments}</p>
         </div>
-  
-     
-        <div className="grid grid-cols-2 gap-6">
-    
-          <div className="bg-white p-6 rounded-lg shadow-lg">
-            <h3 className="text-xl font-bold mb-4">Total Incidents</h3>
-            <div className="text-4xl font-bold mb-2">32</div>
-            <p className="text-gray-500">Progressing Incidents</p>
-            <div className="text-4xl font-bold mb-2">64</div>
-            <p className="text-gray-500">Declined Incidents</p>
-            <div className="text-4xl font-bold mb-2">04</div>
-          </div>
-  
-       
-          <div className="bg-white p-6 rounded-lg shadow-lg">
-            <h3 className="text-xl font-bold mb-4">Department-wise Analysis</h3>
-            {/* Replace with chart if needed */}
-            <div className="flex justify-center items-center h-32 bg-gray-200 rounded-lg">
-              <p>Chart Placeholder</p>
-            </div>
-          </div>
+        <div className="p-4 bg-white shadow rounded-lg">
+          <h2 className="text-lg font-semibold">Total Courses</h2>
+          <p className="text-2xl">{metrics.totalModules}</p>
         </div>
       </div>
-    );
-  };
-  
-  // Incident Card Component
-  const IncidentCard = ({ status, date }) => {
-    const statusStyles = {
-      Assigned: 'bg-blue-500 text-white',
-      'Not Assigned': 'bg-gray-400 text-white',
-      Completed: 'bg-green-500 text-white',
-    };
-  
-    return (
-      <div className={`p-4 rounded-lg ${statusStyles[status]} shadow-lg`}>
-        <p className="text-lg font-bold">Signal Intarapt</p>
-        <p>{date}</p>
-        <div className="mt-2">
-          <button className="bg-white text-sm font-semibold px-4 py-1 rounded-md">
-            {status}
-          </button>
-        </div>
+
+      <div className="space-y-4">
+        <h2 className="text-lg font-semibold">Search Department</h2>
+        <input
+          type="text"
+          placeholder="Enter department name"
+          className="border p-2 rounded w-full"
+          value={departmentSearch}
+          onChange={(e) => setDepartmentSearch(e.target.value)}
+        />
+        <button onClick={handleDepartmentSearch} className="bg-blue-500 text-white p-2 rounded mt-2">Search</button>
+
+        {departmentData && (
+          <div className="p-4 bg-white shadow rounded-lg">
+            <p><strong>Department:</strong> {departmentData.department}</p>
+            <p><strong>Total Students:</strong> {departmentData.studentCount}</p>
+            <p><strong>Total Courses:</strong> {departmentData.courseCount}</p>
+          </div>
+        )}
       </div>
-    );
-  };
-  
-  export default Dashboard;
-  
-  
-  
+
+      <div className="space-y-4">
+        <h2 className="text-lg font-semibold">Search Course</h2>
+        <input
+          type="text"
+          placeholder="Enter course name"
+          className="border p-2 rounded w-full"
+          value={moduleSearch}
+          onChange={(e) => setModuleSearch(e.target.value)}
+        />
+        <button onClick={handleModuleSearch} className="bg-blue-500 text-white p-2 rounded mt-2">Search</button>
+
+        {moduleData && (
+          <div className="p-4 bg-white shadow rounded-lg">
+            <p><strong>Course:</strong> {moduleData.module}</p>
+            <p><strong>Total Students:</strong> {moduleData.studentCount}</p>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}

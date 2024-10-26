@@ -120,8 +120,9 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <StudentLayout />,
-    children: [{ path: "/s_dashboard", element: <S_Dashboard /> },
-    {path: "my_courses", element: <S_Courses /> },
+    children: [
+    { path: "/s_dashboard", element: <S_Dashboard /> },
+    {path: "/my_courses", element: <S_Courses /> },
     ]
     ,
   },
