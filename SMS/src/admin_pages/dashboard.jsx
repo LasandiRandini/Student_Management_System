@@ -73,34 +73,34 @@ export default function Dashboard() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Metrics Section */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="p-6 bg-white shadow rounded-lg text-center">
+        <div className="p-6 bg-cyan-950 shadow rounded-lg text-center">
           <br/>
           <br/>
-          <h2 className="text-xl font-semibold">Total Students</h2>
+          <h2 className="text-xl font-semibold text-white">Total Students</h2>
           <br/>
           <br/>
-          <p className="text-6xl font-bold text-blue-600">{metrics.totalStudents}</p>
+          <p className="text-6xl font-bold text-blue-200">{metrics.totalStudents}</p>
         </div>
-        <div className="p-6 bg-white shadow rounded-lg text-center">
+        <div className="p-6 bg-cyan-600 shadow rounded-lg text-center">
           <br/>
           <br/>
-          <h2 className="text-xl font-semibold">Total Departments</h2>
+          <h2 className="text-xl font-semibold text-white">Total Departments</h2>
           <br/>
           <br/>
-          <p className="text-6xl font-bold text-green-600">{metrics.totalDepartments}</p>
+          <p className="text-6xl font-bold text-green-200">{metrics.totalDepartments}</p>
         </div>
-        <div className="p-6 bg-white shadow rounded-lg text-center">
+        <div className="p-6 bg-cyan-950 shadow rounded-lg text-center">
           <br/>
           <br/>
-          <h2 className="text-xl font-semibold">Total Courses</h2>
+          <h2 className="text-xl font-semibold text-white">Total Courses</h2>
           <br/>
           <br/>
-          <p className="text-6xl font-bold text-purple-600">{metrics.totalModules}</p>
+          <p className="text-6xl font-bold text-purple-200">{metrics.totalModules}</p>
         </div>
       </div>
 
         {/* Department-wise Student Distribution Chart */}
-        <div className="p-6 bg-white shadow rounded-lg">
+        <div className="p-6 bg-slate-200 shadow rounded-lg">
           <h2 className="text-lg font-semibold text-center mb-4">Department-wise Students</h2>
           <div className="flex justify-center">
             <div className="w-64 h-64">
@@ -113,7 +113,7 @@ export default function Dashboard() {
       {/* Bottom Row: Department-wise Courses & Search */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Department-wise Course Distribution Chart */}
-        <div className="p-6 bg-white shadow rounded-lg">
+        <div className="p-6 bg-emerald-200 shadow rounded-lg">
           <h2 className="text-lg font-semibold text-center mb-4">Department-wise Courses</h2>
           <div className="flex justify-center">
             <div className="w-64 h-64">
@@ -123,7 +123,7 @@ export default function Dashboard() {
         </div>
 
         {/* Search Section */}
-        <div className="p-6 bg-white shadow rounded-lg space-y-6">
+        <div className="p-6 bg-gray-100 shadow rounded-lg space-y-6">
           {/* Department Search Section */}
           <div className="space-y-4">
             <h2 className="text-lg font-semibold">Search Department</h2>
@@ -136,7 +136,7 @@ export default function Dashboard() {
             />
             <button
               onClick={handleDepartmentSearch}
-              className="bg-blue-500 text-white p-2 rounded w-full mt-2 hover:bg-blue-600 transition"
+              className="bg-blue-200 text-black p-2 rounded w-full mt-2 hover:bg-blue-600 transition"
             >
               Search
             </button>
@@ -161,7 +161,7 @@ export default function Dashboard() {
             />
             <button
               onClick={handleModuleSearch}
-              className="bg-blue-500 text-white p-2 rounded w-full mt-2 hover:bg-blue-600 transition"
+              className="bg-blue-200 text-black p-2 rounded w-full mt-2 hover:bg-blue-600 transition"
             >
               Search
             </button>
