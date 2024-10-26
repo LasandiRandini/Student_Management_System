@@ -92,3 +92,34 @@ export const searchDepartment = async (req, res) => {
     res.status(500).json({ error: "Error searching department" });
   }
 };
+
+
+
+
+
+// Get department-wise data including total students and modules (courses) in each department
+export const getDepartmentWiseData = async (req, res) => {
+  try {
+    const departments = await Department.find();
+
+    const departmentData = await Promise.all(
+      departments.map(async (department) => {
+        // Count students by matching the department field
+        const studentCount = await Student.countDocuments({ department: department.name });
+
+        // Count modules (courses) in this department
+        const moduleCount = department.modules.length;
+
+        return {
+          departmentName: department.name,
+          studentCount,
+          moduleCount,
+        };
+      })
+    );
+
+    res.json(departmentData);
+  } catch (error) {
+    res.status(500).json({ error: "Error fetching department-wise data" });
+  }
+};
