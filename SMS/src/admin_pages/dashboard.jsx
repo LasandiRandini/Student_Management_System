@@ -123,7 +123,7 @@ export default function Dashboard() {
         </div>
 
         {/* Search Section */}
-        <div className="p-6 bg-gray-100 shadow rounded-lg space-y-6">
+        <div className="p-6 bg-gray-200 shadow rounded-lg space-y-6">
           {/* Department Search Section */}
           <div className="space-y-4">
             <h2 className="text-lg font-semibold">Search Department</h2>
