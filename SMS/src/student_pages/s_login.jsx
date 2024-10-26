@@ -182,7 +182,7 @@ const Login = () => {
           <h1 className="text-4xl font-bold mb-4">Welcome to SLT Mobitel</h1>
           <button
             className="border border-white px-6 py-2 rounded-full"
-            onClick={() => window.location.href = '/s_dashboard'}  // Navigate to registration
+            onClick={() => window.location.href = '/Sregistration'}  // Navigate to registration
           >
             Sign up
           </button>
