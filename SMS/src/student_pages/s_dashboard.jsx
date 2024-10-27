@@ -3,7 +3,9 @@ import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import { FaSearch } from "react-icons/fa";
 import Swal from "sweetalert2";
+//import amqp from 'amqplib/callback_api';
 import axios from "axios";
+
 
 const Dashboard = () => {
   const [date, setDate] = useState(new Date());
@@ -68,7 +70,7 @@ const Dashboard = () => {
   };
   const submitInquiry = async () => {
     try {
-      await axios.post(`http://localhost:9090/api/inquiries`, {
+      await axios.post(`http://localhost:9090/api/inquiries/inquiry`, {
         studentId: user._id,
         title: inquiryTitle,
         message: inquiryMessage
@@ -91,6 +93,57 @@ const Dashboard = () => {
       });
     }
   };
+  // const submitInquiry = async () => {
+  //   try {
+  //     // Connect to RabbitMQ
+  //     amqp.connect('amqp://localhost', (connectErr, connection) => {
+  //       if (connectErr) throw connectErr;
+        
+  //       connection.createChannel((channelErr, channel) => {
+  //         if (channelErr) throw channelErr;
+  
+  //         const queue = 'inquiryQueue';
+  //         const message = JSON.stringify({
+  //           studentId: user._id,
+  //           title: inquiryTitle,
+  //           message: inquiryMessage,
+  //           timestamp: new Date().toISOString(),
+  //         });
+  
+  //         // Assert queue (create if not exists)
+  //         channel.assertQueue(queue, { durable: false });
+  
+  //         // Send inquiry message to queue
+  //         channel.sendToQueue(queue, Buffer.from(message));
+  //         console.log("Inquiry sent to RabbitMQ");
+  
+  //         Swal.fire({
+  //           icon: 'success',
+  //           title: 'Inquiry Sent',
+  //           text: 'Your inquiry has been successfully sent to the admin.',
+  //           confirmButtonText: 'OK'
+  //         });
+  
+  //         // Clear inquiry fields
+  //         setInquiryTitle('');
+  //         setInquiryMessage('');
+  //       });
+  
+  //       // Close connection after a timeout
+  //       setTimeout(() => {
+  //         connection.close();
+  //       }, 500);
+  //     });
+  //   } catch (error) {
+  //     console.error('Error sending inquiry:', error);
+  //     Swal.fire({
+  //       icon: 'error',
+  //       title: 'Inquiry Failed',
+  //       text: 'Could not send your inquiry. Please try again.',
+  //       confirmButtonText: 'OK'
+  //     });
+  //   }
+  // };
   return (
     <div className="min-h-screen bg-gradient-to-r from-[#0F407B] to-[#24AF77] p-6">
       <div className=" mb-6 text-3xl font-bold text-white">
