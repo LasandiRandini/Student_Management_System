@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 
 const AddModule = () => {
+  const navigate = useNavigate();
   const { departmentId, level } = useParams();
   const [departmentName, setDepartmentName] = useState(""); 
   const [modules, setModules] = useState([]); 
@@ -91,6 +92,10 @@ const AddModule = () => {
       console.error("Error adding module: ", error);
     }
   };
+  const handleViewStudents = (moduleId) => {
+    // Navigate to the students page for the selected module
+    navigate(`/modules/${moduleId}/students`);
+  };
   return (
     <div className="p-4">
       <div className="flex justify-between items-center mb-6">
@@ -120,6 +125,18 @@ const AddModule = () => {
 
               
               <div className="mt-2 flex space-x-2">
+              <button
+                onClick={() => handleViewStudents(module._id)}
+                className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+              >
+                Students
+              </button>
+              <Link
+                to={`/modules/${module._id}/overview`}
+                className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+              >
+                Overview
+              </Link>
                 <button
                   className="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600"
                   onClick={() => console.log("Edit module", module._id)}
