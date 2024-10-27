@@ -9,3 +9,5 @@ router.get("/getStudent", getStudent);
 router.put("/verify/:id", verifyStudent);
 
 export default router;
+
+

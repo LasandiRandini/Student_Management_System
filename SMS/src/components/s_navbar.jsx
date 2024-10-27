@@ -31,7 +31,7 @@ useEffect(() => {
             <a href="/s_dashboard" className="text-gray-700 hover:text-blue-500  font-bold">
               Dashboard
             </a>
-            <a href="#" className="text-gray-700 hover:text-blue-500 font-bold">
+            <a href="/my_courses" className="text-gray-700 hover:text-blue-500 font-bold">
               My Courses
             </a>
           </div>
