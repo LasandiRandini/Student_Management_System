@@ -32,15 +32,11 @@ import departmentRoute from "./routes/department_route.js";
 import studentRoute from "./routes/student_route.js";
 import ModuleRoute from "./routes/module_route.js";
 import studentModuleRoute from "./routes/student_module_route.js";
-
 import adminRoute from "./routes/admin_route.js";
-
 import dashboardRoutes from './routes/dashboard_route.js';
 
 import cors from "cors";
 import cookieParser from "cookie-parser";
-
-
 
 const app = express();
 
@@ -48,6 +44,7 @@ app.use(cors());
 
 app.use(express.json())
 app.use(cookieParser())
+app.use('/uploads', express.static('uploads'));
 
 dotenv.config();
 

@@ -1,31 +1,32 @@
 import { Student } from "../models/student.js";
 import { Module } from "../models/module.js";
 
+
 export const enrollStudentInModule = async (req, res) => {
-  const { studentId,courseCode} = req.body;
+  const { studentId, moduleId } = req.body;  
 
   try {
     const student = await Student.findById(studentId);
-    const module = await Module.findById(courseCode);
+    const module = await Module.findById(moduleId);  
 
     if (!student || !module) {
       return res.status(404).json({ message: "Student or Module not found." });
     }
 
-    
-    if (student.modules.includes(courseCode)) {
+    if (student.modules.includes(module._id)) {
       return res.status(400).json({ message: "Student is already enrolled in this module." });
     }
 
-    
-    student.modules.push(courseCode);
-    module.students.push(studentId);
-
+    student.modules.push(module._id);
+    module.students.push(student._id);
+    console.log('Student ID:', studentId);
+    console.log('Module ID:', moduleId);
     await student.save();
     await module.save();
 
     res.status(201).json({ message: "Student enrolled in module successfully." });
   } catch (error) {
+    console.error(error);
     res.status(500).json({ message: "Failed to enroll student in module.", error });
   }
 };
@@ -56,7 +57,7 @@ export const getStudentModules = async (req, res) => {
         return res.status(404).json({ message: "Student or Module not found." });
       }
   
-      
+
       student.modules.pull(moduleId);
       module.students.pull(studentId);
   

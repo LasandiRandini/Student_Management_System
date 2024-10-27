@@ -34,12 +34,25 @@ const Dashboard = () => {
     }
   };
 
-
-  const enrollInCourse = async (courseCode) => {
+  // const enrollInCourse = async (moduleId) => {
+  //   try {
+  //     const studentId = user.id;  
+  //     await axios.post(`http://localhost:9090/api/student_modules/enroll`, { studentId, moduleId });
+  //     alert(`Successfully enrolled in course with ID ${moduleId}`);
+  //     console.log({ studentId, moduleId }); 
+  //   } catch (error) {
+  //     console.error('Error enrolling in course:', error);
+  //     alert('Enrollment failed. Please try again.');
+  //   }
+  // };
+  const enrollInCourse = async (moduleId) => {
+    const storedUser = JSON.parse(localStorage.getItem("user") || "{}");
+    const studentId = storedUser._id; 
+  
     try {
-      const studentId = user.id;
-      await axios.post(`http://localhost:9090/api/student_modules/enroll`, { studentId, courseCode });
-      alert(`Successfully enrolled in course ${courseCode}`);
+      await axios.post(`http://localhost:9090/api/student_modules/enroll`, { studentId, moduleId });
+      alert(`Successfully enrolled in course with ID ${moduleId}`);
+      console.log({ studentId, moduleId });
     } catch (error) {
       console.error('Error enrolling in course:', error);
       alert('Enrollment failed. Please try again.');
@@ -83,21 +96,36 @@ const Dashboard = () => {
 
           
           <div className="bg-gray-100 p-4 rounded-lg">
-            {filteredCourses.length > 0 ? (
-              filteredCourses.map((course, index) => (
-                <div key={index} className="flex justify-between items-center mb-2">
-                  <span className="font-medium text-gray-800">{course.name}</span>
-                  <button
-                    onClick={() => enrollInCourse(course.courseCode)}
-                    className="bg-green-600 text-white py-1 px-3 rounded hover:bg-green-700"
-                  >
-                    Enroll
-                  </button>
-                </div>
-              ))
-            ) : (
-              <p className="text-gray-600">No courses found. Try searching for a valid course code.</p>
-            )}
+          {filteredCourses.length > 0 ? (
+  filteredCourses.map((course, index) => (
+    <div key={index} className="flex justify-between items-center mb-2">
+      <span className="font-medium text-gray-800">{course.name}</span>
+      <button
+        onClick={() => enrollInCourse(course._id)}  // Correctly passing moduleId
+        className="bg-green-600 text-white py-1 px-3 rounded hover:bg-green-700"
+      >
+        Enroll
+      </button>
+    </div>
+  ))
+) : (
+  <p className="text-gray-600">No courses found. Try searching for a valid course code.</p>
+)}
+            {/* {filteredCourses.length > 0 ? (
+  filteredCourses.map((course, index) => (
+    <div key={index} className="flex justify-between items-center mb-2">
+      <span className="font-medium text-gray-800">{course.name}</span>
+      <button
+        onClick={() => enrollInCourse(course._id)}  // Pass moduleId instead of courseCode
+        className="bg-green-600 text-white py-1 px-3 rounded hover:bg-green-700"
+      >
+        Enroll
+      </button>
+    </div>
+  ))
+) : (
+  <p className="text-gray-600">No courses found. Try searching for a valid course code.</p>
+)} */}
           </div>
         </div>
 
