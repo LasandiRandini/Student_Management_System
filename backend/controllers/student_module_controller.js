@@ -2,23 +2,23 @@ import { Student } from "../models/student.js";
 import { Module } from "../models/module.js";
 
 export const enrollStudentInModule = async (req, res) => {
-  const { studentId, moduleId } = req.body;
+  const { studentId,courseCode} = req.body;
 
   try {
     const student = await Student.findById(studentId);
-    const module = await Module.findById(moduleId);
+    const module = await Module.findById(courseCode);
 
     if (!student || !module) {
       return res.status(404).json({ message: "Student or Module not found." });
     }
 
-    // Check if student is already enrolled in the module
-    if (student.modules.includes(moduleId)) {
+    
+    if (student.modules.includes(courseCode)) {
       return res.status(400).json({ message: "Student is already enrolled in this module." });
     }
 
-    // Add module to student's enrolled modules and student to module's enrolled students
-    student.modules.push(moduleId);
+    
+    student.modules.push(courseCode);
     module.students.push(studentId);
 
     await student.save();
@@ -56,7 +56,7 @@ export const getStudentModules = async (req, res) => {
         return res.status(404).json({ message: "Student or Module not found." });
       }
   
-      // Remove module from student's enrolled modules and student from module's enrolled students
+      
       student.modules.pull(moduleId);
       module.students.pull(studentId);
   

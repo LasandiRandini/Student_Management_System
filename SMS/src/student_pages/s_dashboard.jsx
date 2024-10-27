@@ -23,7 +23,7 @@ const Dashboard = () => {
     }
   }, []);
 
-  // Function to fetch courses based on search term
+  
   const handleSearch = async () => {
     try {
       const response = await axios.get(`http://localhost:9090/api/student_modules/search?courseCode=${searchTerm}`);
@@ -35,19 +35,9 @@ const Dashboard = () => {
   };
 
 
-  // const enrollInCourse = async (courseCode) => {
-  //   try {
-  //     await axios.post(`http://localhost:9090/api/student_modules/enroll`, { courseCode });
-  //     alert(`Successfully enrolled in course ${courseCode}`);
-  //     // Update the course or user data as needed
-  //   } catch (error) {
-  //     console.error('Error enrolling in course:', error);
-  //     alert('Enrollment failed. Please try again.');
-  //   }
-  // };
   const enrollInCourse = async (courseCode) => {
     try {
-      const studentId = user.id; // Assuming `id` is the student's identifier in the user object.
+      const studentId = user.id;
       await axios.post(`http://localhost:9090/api/student_modules/enroll`, { studentId, courseCode });
       alert(`Successfully enrolled in course ${courseCode}`);
     } catch (error) {
@@ -62,7 +52,7 @@ const Dashboard = () => {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Calendar */}
+        
         <div className="bg-white rounded-lg shadow-lg p-6">
           <h2 className="text-lg font-semibold mb-4 text-gray-800">Select Dates</h2>
           <Calendar onChange={setDate} value={date} className="mb-4" />
@@ -72,7 +62,7 @@ const Dashboard = () => {
           </div>
         </div>
 
-        {/* Search Courses */}
+       
         <div className="bg-white rounded-lg shadow-lg p-6">
           <h3 className="text-lg font-semibold text-gray-800 mb-4">Search Courses to Enroll</h3>
           <div className="flex items-center space-x-4 mb-4">
@@ -91,12 +81,12 @@ const Dashboard = () => {
             </button>
           </div>
 
-          {/* Display filtered courses */}
+          
           <div className="bg-gray-100 p-4 rounded-lg">
             {filteredCourses.length > 0 ? (
               filteredCourses.map((course, index) => (
                 <div key={index} className="flex justify-between items-center mb-2">
-                  <span className="font-medium text-gray-800">{course.title}</span>
+                  <span className="font-medium text-gray-800">{course.name}</span>
                   <button
                     onClick={() => enrollInCourse(course.courseCode)}
                     className="bg-green-600 text-white py-1 px-3 rounded hover:bg-green-700"
@@ -111,7 +101,7 @@ const Dashboard = () => {
           </div>
         </div>
 
-        {/* Upcoming Events */}
+        
         <div className="bg-white rounded-lg shadow-lg p-6">
           <h3 className="text-lg font-semibold text-gray-800 mb-4">Upcoming Events</h3>
           <ul className="text-gray-700">
@@ -124,7 +114,7 @@ const Dashboard = () => {
         </div>
       </div>
 
-      {/* Course and Completed Course Stats */}
+      
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
         <div className="bg-white rounded-lg shadow-lg p-6 flex justify-between items-center">
           <div>

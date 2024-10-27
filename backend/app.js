@@ -64,12 +64,8 @@ app.use('/api/dashboard', dashboardRoutes);
 const PORT = process.env.PORT ;
 const MONGO_URL = process.env.MONGO_URL;
 
-// Connect to MongoDB and start the server
 mongoose
-  .connect(MONGO_URL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
+  .connect(MONGO_URL)
   .then(() => {
     console.log("Database is connected");
     app.listen(PORT, () => {
@@ -80,3 +76,18 @@ mongoose
     console.error(`Error: ${err}`);
     process.exit(1); 
   });
+// mongoose
+//   .connect(MONGO_URL, {
+//     useNewUrlParser: true,
+//     useUnifiedTopology: true,
+//   })
+//   .then(() => {
+//     console.log("Database is connected");
+//     app.listen(PORT, () => {
+//       console.log(`Server is running on port ${PORT}`);
+//     });
+//   })
+//   .catch((err) => {
+//     console.error(`Error: ${err}`);
+//     process.exit(1); 
+//   });
