@@ -4,7 +4,7 @@ import { Department } from "../models/department.js";
 import multer from "multer";
 import path from "path";
 
-// Multer configuration
+// Multer 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, 'uploads/');
@@ -18,7 +18,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 export const uploadModuleImage = upload.single('image');
 
-// Create a new module
+
 export const createModule = async (req, res) => {
   const { name, credits, departmentId, lecturer, level } = req.body;
   const imagePath = req.file ? req.file.path : null;
