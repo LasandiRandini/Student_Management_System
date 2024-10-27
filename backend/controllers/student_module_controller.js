@@ -134,3 +134,23 @@ export const getStudentModules = async (req, res) => {
   //     res.status(500).json({ message: "Failed to search for courses.", error });
   //   }
   // };
+
+
+
+  // Controller to fetch students for a specific module
+export const getStudentsByModule = async (req, res) => {
+  const { moduleId } = req.params;
+
+  try {
+    // Find the module and populate students
+    const module = await Module.findById(moduleId).populate("students", "first_name last_name contact_no email");
+
+    if (!module) {
+      return res.status(404).json({ message: "Module not found" });
+    }
+
+    res.json(module.students);
+  } catch (error) {
+    res.status(500).json({ error: "Error fetching students for the module" });
+  }
+};
