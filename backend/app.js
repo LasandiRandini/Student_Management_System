@@ -56,8 +56,11 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import http from "http";
 import amqp from "amqplib";
+import swaggerUi from "swagger-ui-express";
+import { swaggerSpec } from "./swaggerOptions.js";
 
 import { WebSocketServer } from "ws";
+
 
 
 import departmentRoute from "./routes/department_route.js";
@@ -75,13 +78,15 @@ const app = express();
 const server = http.createServer(app);  
 const wss = new WebSocketServer({ server });  
 
-// Middleware setup
+
 app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
 app.use('/uploads', express.static('uploads'));
 
-// API Routes
+
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
 app.use("/api/departments", departmentRoute);
 app.use("/api/students", studentRoute);
 app.use("/api/modules", moduleRoute);
