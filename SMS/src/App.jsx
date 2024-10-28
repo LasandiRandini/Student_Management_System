@@ -18,6 +18,7 @@ import S_Dashboard from "./student_pages/s_dashboard";
 import S_Navbar from "./components/s_navbar";
 import S_Courses from "./student_pages/my_courses";
 import ModuleStudents from "./admin_pages/ModuleStudents";
+import Settings from "./admin_pages/settings";
 
 const AdminLayout = () => {
   const navbarHeight = "60px";
@@ -130,6 +131,7 @@ const router = createBrowserRouter([
       { path: "/reports", element: <Report /> },
       { path: "/student_mng", element: <Student /> },
       { path: "/subcourse", element: <SubCourse /> },
+      { path: "/settings", element: <Settings/>},
     ],
   },
 ]);
