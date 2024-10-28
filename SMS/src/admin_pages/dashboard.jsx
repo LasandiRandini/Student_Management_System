@@ -13,7 +13,7 @@ export default function Dashboard() {
   const [moduleData, setModuleData] = useState(null);
   const [departmentWiseData, setDepartmentWiseData] = useState([]);
 
-  // Fetch total metrics
+ 
   useEffect(() => {
     axios.get("http://localhost:9090/api/dashboard/dashboardMetrics").then((response) => {
       setMetrics(response.data);
@@ -24,7 +24,7 @@ export default function Dashboard() {
     });
   }, []);
 
-  // Search for department
+ 
   const handleDepartmentSearch = () => {
     axios.get(`http://localhost:9090/api/dashboard/searchDepartment/${departmentSearch}`)
       .then((response) => {
@@ -33,7 +33,7 @@ export default function Dashboard() {
       .catch(() => setDepartmentData(null));
   };
 
-  // Search for module
+
   const handleModuleSearch = () => {
     axios.get(`http://localhost:9090/api/dashboard/searchModule/${moduleSearch}`)
       .then((response) => {
@@ -42,7 +42,7 @@ export default function Dashboard() {
       .catch(() => setModuleData(null));
   };
 
-  // Chart data for department-wise students
+  
   const studentChartData = {
     labels: departmentWiseData.map((d) => d.departmentName),
     datasets: [
@@ -54,7 +54,7 @@ export default function Dashboard() {
     ],
   };
 
-  // Chart data for department-wise courses
+  
   const courseChartData = {
     labels: departmentWiseData.map((d) => d.departmentName),
     datasets: [
@@ -69,9 +69,9 @@ export default function Dashboard() {
   return (
     <div className="p-8 space-y-8 bg-gray-100 min-h-screen">
 
-      {/* Top Row: Metrics & Department-wise Students */}
+      
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* Metrics Section */}
+       
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div className="p-6 bg-cyan-950 shadow rounded-lg text-center">
           <br/>
@@ -99,7 +99,7 @@ export default function Dashboard() {
         </div>
       </div>
 
-        {/* Department-wise Student Distribution Chart */}
+        
         <div className="p-6 bg-slate-200 shadow rounded-lg">
           <h2 className="text-lg font-semibold text-center mb-4">Department-wise Students</h2>
           <div className="flex justify-center">
@@ -110,9 +110,9 @@ export default function Dashboard() {
         </div>
       </div>
 
-      {/* Bottom Row: Department-wise Courses & Search */}
+     
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* Department-wise Course Distribution Chart */}
+        
         <div className="p-6 bg-emerald-200 shadow rounded-lg">
           <h2 className="text-lg font-semibold text-center mb-4">Department-wise Courses</h2>
           <div className="flex justify-center">
@@ -122,9 +122,9 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* Search Section */}
+        
         <div className="p-6 bg-gray-200 shadow rounded-lg space-y-6">
-          {/* Department Search Section */}
+         
           <div className="space-y-4">
             <h2 className="text-lg font-semibold">Search Department</h2>
             <input
@@ -149,7 +149,7 @@ export default function Dashboard() {
             )}
           </div>
 
-          {/* Module Search Section */}
+          
           <div className="space-y-4">
             <h2 className="text-lg font-semibold">Search Course</h2>
             <input

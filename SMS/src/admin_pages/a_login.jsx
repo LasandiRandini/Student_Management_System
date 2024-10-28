@@ -122,7 +122,7 @@ const Login = () => {
         localStorage.setItem('token', response.data.access_token); 
         localStorage.setItem('admin', JSON.stringify(response.data)); 
         
-        navigate('/dashboard');
+        navigate('dashboard');
       })
       .catch((error) => {
         let errorMessage = "Something went wrong. Please try again."; 

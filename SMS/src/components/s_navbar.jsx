@@ -10,7 +10,7 @@ const S_Navbar = () => {
 
   const [user, setUser] = useState({});
 
-// Fetch user data from localStorage and set it
+
 useEffect(() => {
   const storedUser = JSON.parse(localStorage.getItem("user") || "{}");
   if (storedUser && storedUser.first_name && storedUser.last_name) {
@@ -21,12 +21,12 @@ useEffect(() => {
     <nav className="bg-blue-100 shadow-lg">
       <div className="max-w-ful mx-auto px-8">
         <div className="flex justify-between items-center py-2">
-          {/* Logo Section */}
+         
           <div className="flex-shrink-0 ">
             <img src={SLT} alt="SLT Logo" className="w-34 h-12" />
           </div>
 
-          {/* Nav Links - Center */}
+         
           <div className="hidden md:flex space-x-8 text-center">
             <a href="/s_dashboard" className="text-gray-700 hover:text-blue-500  font-bold">
               Dashboard
@@ -36,7 +36,7 @@ useEffect(() => {
             </a>
           </div>
 
-          {/* User Profile Section - Right */}
+      
           <div className="flex items-center space-x-4">
             <FiUser className="text-3xl  text-gray-600" />
             <div className="mt-2  text-1xl font-bold text-blak">

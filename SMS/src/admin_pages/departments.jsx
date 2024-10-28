@@ -133,14 +133,14 @@
 import { useState, useEffect } from "react";
 import { FaUniversity } from "react-icons/fa";
 import axios from "axios";
-import { useNavigate } from "react-router-dom"; // Import for navigation
+import { useNavigate } from "react-router-dom"; 
 
 const Department = () => {
   const [showForm, setShowForm] = useState(false);
   const [departmentName, setDepartmentName] = useState("");
   const [departmentHead, setDepartmentHead] = useState("");
   const [departments, setDepartments] = useState([]);
-  const navigate = useNavigate(); // Initialize navigate
+  const navigate = useNavigate();
 
   const fetchDepartments = async () => {
     try {
@@ -230,7 +230,7 @@ const Department = () => {
             <h2 className="text-xl font-semibold">{department.name}</h2>
             <p className="text-gray-600">Head: {department.headOfDepartment}</p>
 
-            {/* Buttons to navigate to different levels of courses */}
+           
             <div className="flex space-x-2">
               <button 
                 className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition"
