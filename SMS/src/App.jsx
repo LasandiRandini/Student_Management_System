@@ -60,15 +60,6 @@ const AdminLayout = () => {
   );
 };
 
-// const StudentLayout = () => {
-//   return (
-//     <>
-//       <S_Navbar />
-//       <Outlet />
-//      \
-//     </>
-//   );
-// };
 const StudentLayout = () => {
   const navbarHeight = "60px";
   const [isSidebarVisible, setSidebarVisible] = useState(true);

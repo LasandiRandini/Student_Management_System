@@ -33,36 +33,13 @@ const AddModule = () => {
   };
 
  
-  // useEffect(() => {
-  //   console.log("Department ID:", departmentId, "Level:", level); 
-  //   fetchDepartmentName();
-  //   fetchModules();
-  // });
   useEffect(() => {
     console.log("Department ID:", departmentId, "Level:", level); 
     fetchDepartmentName();
     fetchModules();
   }, [departmentId, level]);
   
-  // const handleAddModule = async (e) => {
-  //   e.preventDefault();
-  //   try {
-  //     const response = await axios.post('http://localhost:9090/api/modules/createmodule', {
-  //       name: moduleName,
-  //       credits: moduleCredits,
-  //       lecturer: moduleLecturer,
-  //       departmentId,
-  //       level, 
-  //     });
-  //     setModules([...modules, response.data]); 
-  //     setShowModal(false); 
-  //     setModuleName("");
-  //     setModuleCredits("");
-  //     setModuleLecturer("");
-  //   } catch (error) {
-  //     console.error("Error adding module: ", error);
-  //   }
-  // };
+  
   const handleAddModule = async (e) => {
     e.preventDefault();
     

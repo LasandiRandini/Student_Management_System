@@ -3,7 +3,9 @@ import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import { FaSearch } from "react-icons/fa";
 import Swal from "sweetalert2";
+//import amqp from 'amqplib/callback_api';
 import axios from "axios";
+
 
 const Dashboard = () => {
   const [date, setDate] = useState(new Date());
@@ -68,7 +70,7 @@ const Dashboard = () => {
   };
   const submitInquiry = async () => {
     try {
-      await axios.post(`http://localhost:9090/api/inquiries`, {
+      await axios.post(`http://localhost:9090/api/inquiries/inquiry`, {
         studentId: user._id,
         title: inquiryTitle,
         message: inquiryMessage
@@ -91,6 +93,7 @@ const Dashboard = () => {
       });
     }
   };
+ 
   return (
     <div className="min-h-screen bg-gradient-to-r from-[#0F407B] to-[#24AF77] p-6">
       <div className=" mb-6 text-3xl font-bold text-white">

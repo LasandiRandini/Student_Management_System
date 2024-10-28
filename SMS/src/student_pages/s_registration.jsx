@@ -3,7 +3,7 @@ import logo from '../assets/SLT_logo_w.png';
 import image2 from '../assets/image2.png'; 
 import axios from 'axios'; 
 import Swal from 'sweetalert2';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import { useNavigate } from 'react-router-dom'; 
 
 const Registration = () => {
     const [formData, setFormData] = useState({
@@ -23,7 +23,7 @@ const Registration = () => {
     const [successMessage, setSuccessMessage] = useState(''); 
     const [departments, setDepartments] = useState([]); 
   
-    const navigate = useNavigate(); // Initialize useNavigate
+    const navigate = useNavigate(); 
     const handleChange = (e) => {
       setFormData({ ...formData, [e.target.name]: e.target.value });
     };
@@ -74,7 +74,7 @@ const Registration = () => {
            navigate('/slogin'); 
 
       } catch (err) {
-        // Access error message safely and ensure it's a string
+        
         const errorMessage = err.response?.data?.message || "Registration failed. Please try again.";
         setError(errorMessage);
         setSuccessMessage('');
@@ -97,13 +97,13 @@ const Registration = () => {
 
     return (
       <div className="flex h-screen flex-col md:flex-row">
-        {/* Left Section - Form */}
+        
         <div className="w-full md:w-1/2 flex justify-center items-center bg-[rgb(245,248,248)] p-4">
           <div className='bg-white border shadow-md rounded-lg mt-10 mb-10 w-full max-w-md'>
             <div className="p-5">
               <h2 className="text-3xl font-bold text-center">Register</h2>
-              {error && <p className="text-red-500">{error}</p>} {/* Display error message */}
-              {successMessage && <p className="text-green-500">{successMessage}</p>} {/* Display success message */}
+              {error && <p className="text-red-500">{error}</p>}
+              {successMessage && <p className="text-green-500">{successMessage}</p>} 
               <form onSubmit={handleSubmit}>
                 <div className="mb-1 mt-4">
                   <label className="block text-gray-700 mb-2">First Name</label>
@@ -241,7 +241,7 @@ const Registration = () => {
           </div>
         </div>
        
-        {/* Right Section - Background with Image */}
+       
         <div
           className="hidden md:flex w-1/2 bg-cover bg-center relative"
           style={{ backgroundImage: `url(${image2})` }} 
