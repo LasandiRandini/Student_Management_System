@@ -1,6 +1,6 @@
 import amqp from "amqplib";
 
- let inquiries = []; 
+ 
 export const submitInquiry = async (req, res) => {
   const { studentId, title, message } = req.body;
 
@@ -30,47 +30,30 @@ export const submitInquiry = async (req, res) => {
   }
 };
 
+export const getInquiries = async (req, res) => {
+  try {
+    
+    const connection = await amqp.connect("amqp://localhost");
+    const channel = await connection.createChannel();
 
-// let notifications = []; 
+    const queue = "inquiryQueue";
+    await channel.assertQueue(queue, { durable: false });
 
-// export const initNotificationListener = async () => {
-//   try {
-//     const connection = await amqp.connect("amqp://localhost");
-//     const channel = await connection.createChannel();
+    const inquiries = [];
 
-//     const queue = "inquiryQueue";
-
-//     await channel.assertQueue(queue, { durable: false });
-
-//     console.log("Waiting for inquiries...");
-
-//     channel.consume(queue, (msg) => {
-//       if (msg !== null) {
-//         const inquiry = JSON.parse(msg.content.toString());
-//         notifications.push(inquiry);
-//         console.log("New inquiry added to notifications:", inquiry);
-
-//         // Acknowledge message
-//         channel.ack(msg);
-//       }
-//     });
-//   } catch (error) {
-//     console.error("Error setting up notification listener:", error);
-//   }
-// };
-
-// // Endpoint to retrieve notifications
-// export const getNotifications = (req, res) => {
-//   res.status(200).json({ notifications });
-// };
-
-// Controller to get all inquiries (notifications)
-export const getInquiries = (req, res) => {
-    try {
-      // Return all inquiries stored in memory
-      res.status(200).json(inquiries);
-    } catch (error) {
-      console.error("Error fetching inquiries:", error);
-      res.status(500).json({ error: "Failed to fetch inquiries" });
+    let message;
+    while ((message = await channel.get(queue, { noAck: true }))) {
+      const inquiry = JSON.parse(message.content.toString());
+      inquiries.push(inquiry);
     }
-  };
+
+    
+    setTimeout(() => connection.close(), 6000);
+
+    
+    res.status(200).json({ notifications: inquiries });
+  } catch (error) {
+    console.error("Error fetching inquiries from RabbitMQ:", error);
+    res.status(500).json({ error: "Failed to fetch inquiries" });
+  }
+};

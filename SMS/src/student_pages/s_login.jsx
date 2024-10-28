@@ -1,14 +1,14 @@
 import { useState } from 'react';
 import axios from 'axios';
-import Swal from 'sweetalert2'; // Import SweetAlert2
+import Swal from 'sweetalert2'; 
 import logo from '../assets/SLT_logo_w.png';
 import image1 from '../assets/image1.png';
-import { useNavigate } from 'react-router-dom'; // For navigation
+import { useNavigate } from 'react-router-dom'; 
 
 const Login = () => {
-  const [email, setEmail] = useState(''); // For email input
-  const [password, setPassword] = useState(''); // For password input
-  const navigate = useNavigate(); // Initialize navigation
+  const [email, setEmail] = useState(''); 
+  const [password, setPassword] = useState(''); 
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -16,18 +16,18 @@ const Login = () => {
     axios.post('http://localhost:9090/api/students/slogin', { username: email, password })
       .then((response) => {
         console.log(response);
-        localStorage.setItem('token', response.data.access_token); // Store the token
-        localStorage.setItem('user', JSON.stringify(response.data)); // Store the whole user object
+        localStorage.setItem('token', response.data.access_token); 
+        localStorage.setItem('user', JSON.stringify(response.data)); 
         
         navigate('/s_dashboard');
       })
       .catch((error) => {
-        let errorMessage = "Something went wrong. Please try again."; // Default error message
+        let errorMessage = "Something went wrong. Please try again."; 
         if (error.response && error.response.data) {
           errorMessage = error.response.data.message || "Invalid login credentials";
         }
 
-        // Use SweetAlert2 to display the error message
+       
         Swal.fire({
           icon: 'error',
           title: 'Oops...',
@@ -38,29 +38,29 @@ const Login = () => {
 
   return (
     <div className="flex h-screen">
-      {/* Left Section - Hidden on small screens */}
+    
       <div
         className="hidden md:block w-1/2 bg-cover bg-center relative"
-        style={{ backgroundImage: `url(${image1})` }} // Reference imported image1
+        style={{ backgroundImage: `url(${image1})` }} 
       >
-        {/* Gradient overlay */}
+        
         <div className="absolute inset-0 bg-gradient-to-b from-[#0F407B] to-[#24AF77] opacity-80"></div>
 
-        {/* Content inside the overlay */}
+       
         <div className="relative flex flex-col justify-center items-center h-full text-white p-8">
-          {/* Logo */}
+          
           <img src={logo} alt="SLT Mobitel" className="mb-8 w-64" />
           <h1 className="text-4xl font-bold mb-4">Welcome to SLT Mobitel</h1>
           <button
             className="border border-white px-6 py-2 rounded-full"
-            onClick={() => window.location.href = '/Sregistration'}  // Navigate to registration
+            onClick={() => window.location.href = '/Sregistration'} 
           >
             Sign up
           </button>
         </div>
       </div>
 
-      {/* Right Section - Full width on small screens, half width on medium and larger screens */}
+      
       <div className="w-full md:w-1/2 flex justify-center items-center bg-gray-100">
         <div className="bg-white p-10 rounded-lg shadow-md w-full md:w-96">
           <h2 className="text-3xl font-bold text-center mb-6">Sign in</h2>

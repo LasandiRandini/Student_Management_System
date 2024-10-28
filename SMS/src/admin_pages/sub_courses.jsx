@@ -125,7 +125,7 @@
 
 // export default CourseDetail;
 import { useState } from 'react';
-import { FaUser, FaUserGraduate } from 'react-icons/fa';  // Import icons from react-icons
+import { FaUser, FaUserGraduate } from 'react-icons/fa';  
 
 const mockCourseData = {
   course: {
@@ -146,10 +146,10 @@ const CourseDetail = () => {
   const [staffMembers, setStaffMembers] = useState(['Member 1', 'Member 2']);
   const [status] = useState('In Progress');
 
-  // Determine the student count for the selected level
+  
   const studentCount = course.students[selectedLevel];
 
-  // Icon condition: change icon based on student count
+  
   const studentIcon = studentCount > 100 ? <FaUserGraduate className='mt-8 mr-10 ' size={50} color="green" /> : <FaUser size={50} color="blue" />;
 
   const handleContentChange = (index, newValue) => {
@@ -188,7 +188,7 @@ const CourseDetail = () => {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-6">
-        {/* Students Enrolled */}
+        
         <div className="bg-white shadow-md rounded-lg p-6">
           <h2 className="text-2xl font-bold mb-2">No. of Students Enrolled</h2>
           <div className="flex items-center justify-center">
@@ -197,7 +197,7 @@ const CourseDetail = () => {
           </div>
         </div>
 
-        {/* Course Status */}
+        
         <div className="bg-white shadow-md rounded-lg p-6">
           <h2 className="text-2xl font-bold mb-2">Status</h2>
           <div className="flex items-center justify-center mt-4">
@@ -205,7 +205,7 @@ const CourseDetail = () => {
           </div>
         </div>
 
-        {/* Staff Members */}
+        
         <div className="bg-white shadow-md rounded-lg p-6">
           <h2 className="text-2xl font-bold mb-2">Staff Members</h2>
           <ul className="mt-4">
@@ -227,7 +227,7 @@ const CourseDetail = () => {
         </div>
       </div>
 
-      {/* Course Content */}
+      
       <div className="mt-6 bg-white shadow-md rounded-lg p-6">
         <h2 className="text-2xl font-bold mb-4">Course Content</h2>
         <ul>
