@@ -17,52 +17,8 @@ const router = express.Router();
 
 /**
  * @swagger
- * /api/admins/aregister:
- *   post:
- *     summary: Register a new admin
- *     tags: [Admin]
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               first_name:
- *                 type: string
- *               last_name:
- *                 type: string
- *               contact_no:
- *                 type: string
- *               email:
- *                 type: string
- *               username:
- *                 type: string
- *               password:
- *                 type: string
- *     responses:
- *       200:
- *         description: Admin registered successfully
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                 admin:
- *                   type: object
- *       400:
- *         description: Validation error
- *       409:
- *         description: Admin already exists
- *       500:
- *         description: Internal server error
- */
-router.post("/aregister", aregister);
 
-/**
- * @swagger
+
  * /api/admins/alogin:
  *   post:
  *     summary: Admin login
@@ -97,6 +53,62 @@ router.post("/aregister", aregister);
  *       500:
  *         description: Internal server error
  */
+
+
 router.post("/alogin", alogin);
+/**
+ * @swagger
+
+ * /api/admins/aregister:
+ *   post:
+ *     summary: Register a new admin
+ *     tags: [Admin]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               first_name:
+
+ *                 type: string
+
+ *                 type: string             
+
+ *               last_name:
+ *                 type: string
+ *               contact_no:
+ *                 type: string
+ *               email:
+ *                 type: string
+ *               username:
+ *                 type: string
+ *               password:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Admin registered successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                 admin:
+ *                   type: object
+ *       400:
+ *         description: Validation error
+ *       409:
+ *         description: Admin already exists
+ *       500:
+ *         description: Internal server error
+ */
+
+
+
+router.post("/aregister", aregister);
+
 
 export default router;
