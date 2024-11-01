@@ -10,7 +10,7 @@ router.get("/search", searchCourses);
 
 
 
-// Route to get students enrolled in a specific module
+
 router.get("/:moduleId/students", getStudentsByModule);
 
 export default router;

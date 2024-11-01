@@ -29,6 +29,47 @@ export const getDepartment = async (req, res) => {
   }
 };
 
+export const deleteDepartment = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const department = await Department.findByIdAndDelete(id);
+
+    if (!department) {
+      return res.status(404).json({ error: "Department not found" });
+    }
+
+    res.status(200).json({ message: "Department deleted successfully" });
+  } catch (error) {
+    res.status(500).json({ error: "Error deleting department" });
+  }
+};
+
+
+// Update Department
+export const updateDepartment = async (req, res) => {
+  const { id } = req.params;
+  const { name, headOfDepartment } = req.body;
+
+  if (!name || !headOfDepartment) {
+    return res.status(400).json({ error: 'Name and Head of Department are required.' });
+  }
+
+  try {
+    const updatedDepartment = await Department.findByIdAndUpdate(
+      id,
+      { name, headOfDepartment },
+      { new: true }
+    );
+
+    if (!updatedDepartment) {
+      return res.status(404).json({ error: "Department not found." });
+    }
+
+    res.status(200).json(updatedDepartment);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
 
 export const getDepartmentById = async (req, res) => {
   try {

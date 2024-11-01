@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import logo from '../assets/SLT_logo_w.png';  
-import image2 from '../assets/image2.png'; 
+import image2 from '../assets/register.png'; 
 import axios from 'axios'; 
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom'; 
@@ -28,6 +28,46 @@ const Registration = () => {
       setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
+
+    const validate = () => {
+      const errors = {};
+
+      if (!formData.first_name) errors.first_name = "First name is required";
+      if (!formData.last_name) errors.last_name = "Last name is required";
+
+      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!formData.email) {
+        errors.email = "Email address is required";
+      } else if (!emailPattern.test(formData.email)) {
+        errors.email = "Invalid email address";
+      }
+  
+      const contactNoPattern = /^[0-9]{10}$/;
+      if (!formData.contact_no) {
+        errors.contact_no = "Contact No is required";
+      } else if (!contactNoPattern.test(formData.contact_no)) {
+        errors.contact_no = "Contact No must be 10 digits";
+      }
+
+      if (!formData.username) {
+        errors.username = "Username is required";
+      } else if (formData.username.length < 5) {
+        errors.username = "Username must be at least 5 characters long";
+      }
+
+      if (!formData.password) {
+        errors.password = "Password is required";
+      } else if (formData.password.length < 8) {
+        errors.password = "Password must be at least 8 characters long";
+      }
+
+      if (formData.password !== formData.confirmPassword) {
+        errors.confirmPassword = "Passwords do not match!";
+      }
+
+      return errors;
+    };
+    
     const handleSubmit = async (e) => {
       e.preventDefault();
 
@@ -98,15 +138,15 @@ const Registration = () => {
     return (
       <div className="flex h-screen flex-col md:flex-row">
         
-        <div className="w-full md:w-1/2 flex justify-center items-center bg-[rgb(245,248,248)] p-4">
-          <div className='bg-white border shadow-md rounded-lg mt-10 mb-10 w-full max-w-md'>
-            <div className="p-5">
+        <div className="w-full md:w-1/2 flex justify-center items-center bg-[rgb(245,248,248)] p-3">
+          <div className='bg-whit e border shadow-md rounded-lg mt-18 w-full max-w-md '>
+            <div className="p-8">
               <h2 className="text-3xl font-bold text-center">Register</h2>
               {error && <p className="text-red-500">{error}</p>}
               {successMessage && <p className="text-green-500">{successMessage}</p>} 
               <form onSubmit={handleSubmit}>
-                <div className="mb-1 mt-4">
-                  <label className="block text-gray-700 mb-2">First Name</label>
+                <div className="mb-1 mt-3">
+                  <label className="block text-gray-700 mb-1">First Name</label>
                   <input
                     type="text"
                     name="first_name"
@@ -118,7 +158,7 @@ const Registration = () => {
                 </div>
 
                 <div className="mb-1">
-                  <label className="block text-gray-700 mb-2">Last Name</label>
+                  <label className="block text-gray-700 mb-1">Last Name</label>
                   <input
                     type="text"
                     name="last_name"
@@ -130,7 +170,7 @@ const Registration = () => {
                 </div>
 
                 <div className="mb-1">
-                  <label className="block text-gray-700 mb-2">Birth Day</label>
+                  <label className="block text-gray-700 mb-1">Birth Day</label>
                   <input
                     type="date" 
                     name="birth_day"
@@ -141,7 +181,7 @@ const Registration = () => {
                 </div>
 
                 <div className="mb-1">
-                  <label className="block text-gray-700 mb-2">Contact Number</label>
+                  <label className="block text-gray-700 mb-1">Contact Number</label>
                   <input
                     type="text"
                     name="contact_no"
@@ -153,7 +193,7 @@ const Registration = () => {
                 </div>
 
                 <div className="mb-1">
-                  <label className="block text-gray-700 mb-2">Email</label>
+                  <label className="block text-gray-700 mb-1">Email</label>
                   <input
                     type="email"
                     name="email"
@@ -165,7 +205,7 @@ const Registration = () => {
                 </div>
 
                 <div className="mb-1">
-                  <label className="block text-gray-700 mb-2">Department</label>
+                  <label className="block text-gray-700 mb-1">Department</label>
                   <select
                     name="department"
                     value={formData.department}
@@ -180,7 +220,7 @@ const Registration = () => {
                 </div>
 
                 <div className="mb-1">
-                  <label className="block text-gray-700 mb-2">Level</label>
+                  <label className="block text-gray-700 mb-1">Level</label>
                   <select
                     name="level"
                     value={formData.level}
@@ -195,7 +235,7 @@ const Registration = () => {
                 </div>
 
                 <div className="mb-1">
-                  <label className="block text-gray-700 mb-2">Username</label>
+                  <label className="block text-gray-700 mb-1">Username</label>
                   <input
                     type="text"
                     name="username"
@@ -207,7 +247,7 @@ const Registration = () => {
                 </div>
 
                 <div className="mb-1">
-                  <label className="block text-gray-700 mb-2">Password</label>
+                  <label className="block text-gray-700 mb-1">Password</label>
                   <input
                     type="password"
                     name="password"
@@ -219,7 +259,7 @@ const Registration = () => {
                 </div>
 
                 <div className="mb-1">
-                  <label className="block text-gray-700 mb-2">Confirm Password</label>
+                  <label className="block text-gray-700 mb-1">Confirm Password</label>
                   <input
                     type="password"
                     name="confirmPassword"
@@ -232,7 +272,7 @@ const Registration = () => {
                 
                 <button
                   type="submit"
-                  className="w-full bg-green-600 text-white py-2 rounded-lg shadow-lg hover:bg-green-700 mt-4"
+                  className="w-full bg-green-600 text-white py-2 rounded-lg shadow-lg hover:bg-green-700 mt-2"
                 >
                   Register
                 </button>

@@ -16,31 +16,12 @@ import {
   createDepartment,
   getDepartmentById,
   getdepartmentnames,
+  deleteDepartment,
+  updateDepartment
 } from "../controllers/department_controller.js";
 
 const router = express.Router();
 
-/**
- * @swagger
- * /api/departments/getdepartment:
- *   get:
- *     summary: Retrieve a list of departments
- *     description: Retrieve all department details from the database.
- *     responses:
- *       200:
- *         description: A list of departments.
- *         content:
- *           application/json:
- *             schema:
- *               type: array
- *               items:
- *                 type: object
- *                 properties:
- *                   id:
- *                     type: integer
- *                   name:
- *                     type: string
- */
 router.get("/getdepartment", getDepartment);
 
 /**
@@ -48,7 +29,7 @@ router.get("/getdepartment", getDepartment);
  * /api/departments/createdepartment:
  *   post:
  *     summary: Create a new department
- *     description: Add a new department to the database.
+ *     tags: [Department]
  *     requestBody:
  *       required: true
  *       content:
@@ -58,51 +39,35 @@ router.get("/getdepartment", getDepartment);
  *             properties:
  *               name:
  *                 type: string
+ *                 description: Name of the department
+ *               description:
+ *                 type: string
+ *                 description: Description of the department
  *     responses:
  *       201:
- *         description: Department created successfully.
- *       400:
- *         description: Bad request, invalid input.
- */
-router.post("/createdepartment", createDepartment);
-
-/**
- * @swagger
- * /api/departments/getdepname/{id}:
- *   get:
- *     summary: Get a department by ID
- *     description: Retrieve a specific department by its ID.
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: integer
- *         description: The department ID
- *     responses:
- *       200:
- *         description: Department found.
- *       404:
- *         description: Department not found.
- */
-router.get("/getdepname/:id", getDepartmentById);
-
-/**
- * @swagger
- * /api/departments/getdepartmentnames:
- *   get:
- *     summary: Retrieve department names
- *     description: Retrieve only the names of all departments.
- *     responses:
- *       200:
- *         description: A list of department names.
+ *         description: Department created successfully
  *         content:
  *           application/json:
  *             schema:
- *               type: array
- *               items:
- *                 type: string
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: Success message
+ *                 department:
+ *                   type: object
+ *                   description: Created department details
+ *       400:
+ *         description: Validation error
+ *       500:
+ *         description: Internal server error
  */
+router.post("/createdepartment", createDepartment);
+
+
 router.get("/getdepartmentnames", getdepartmentnames);
+router.delete("/deletedepartment/:id", deleteDepartment);
+router.put("/updatedepartment/:id", updateDepartment);
+
 
 export default router;

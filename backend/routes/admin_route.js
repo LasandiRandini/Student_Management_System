@@ -17,8 +17,6 @@ const router = express.Router();
 
 /**
  * @swagger
-
-
  * /api/admins/alogin:
  *   post:
  *     summary: Admin login
@@ -53,12 +51,10 @@ const router = express.Router();
  *       500:
  *         description: Internal server error
  */
-
-
 router.post("/alogin", alogin);
+
 /**
  * @swagger
-
  * /api/admins/aregister:
  *   post:
  *     summary: Register a new admin
@@ -71,11 +67,7 @@ router.post("/alogin", alogin);
  *             type: object
  *             properties:
  *               first_name:
-
  *                 type: string
-
- *                 type: string             
-
  *               last_name:
  *                 type: string
  *               contact_no:
@@ -105,10 +97,6 @@ router.post("/alogin", alogin);
  *       500:
  *         description: Internal server error
  */
-
-
-
 router.post("/aregister", aregister);
-
 
 export default router;

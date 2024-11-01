@@ -16,84 +16,7 @@ export const validateStudent = [
   
 ];
 
-// export const sregister = async (req, res) => {
-//   const errors = validationResult(req);
-//   if (!errors.isEmpty()) {
-//     return res.status(400).json({ errors: errors.array() });
-//   }
 
-//   const { first_name, last_name, birth_day, contact_no, email, department, level, username, password } = req.body;
-
-//   try {
-//     const existingStudent = await Student.findOne({ $or: [{ email }, { username }] });
-//     if (existingStudent) return res.status(409).json("Student already exists!");
-
-//     const hash = await bcrypt.hash(password, 12);
-//     const newStudent = new Student({
-//       first_name,
-//       last_name,
-//       birth_day,
-//       contact_no,
-//       email,
-//       department,
-//       level,
-//       username,
-//       password: hash,
-//     });
-
-//     await newStudent.save();
-//     const token = Jwt.sign({ id: newStudent._id }, process.env.JWT_SECRET, { expiresIn: "1h" });
-
-//     const { password: _, ...studentData } = newStudent._doc; 
-//     res
-//       .cookie("access_token", token, { httpOnly: true })
-//       .status(200)
-//       .json({ message: "Student registered successfully!", student: studentData });
-//   } catch (err) {
-//     console.error(err); 
-//     return res.status(500).json({ error: "Internal server error" });
-//   }
-// };
-
-export const sregister = async (req, res) => {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() });
-  }
-
-  const { first_name, last_name, birth_day, contact_no, email, department, level, username, password } = req.body;
-
-  try {
-    const existingStudent = await Student.findOne({ $or: [{ email }, { username }] });
-    if (existingStudent) return res.status(409).json("Student already exists!");
-
-    const hash = await bcrypt.hash(password, 12);
-    const newStudent = new Student({
-      first_name,
-      last_name,
-      birth_day,
-      contact_no,
-      email,
-      department,
-      level,
-      username,
-      password: hash,
-    });
-
-    await newStudent.save();
-
-    const token = Jwt.sign({ id: newStudent._id }, process.env.JWT_SECRET, { expiresIn: "1h" });
-
-    const { password: _, ...studentData } = newStudent._doc;
-    res
-      .cookie("access_token", token, { httpOnly: true, secure: process.env.NODE_ENV === "production" })
-      .status(200)
-      .json({ message: "Student registered successfully!", student: studentData });
-  } catch (err) {
-    console.error(err);
-    return res.status(500).json({ error: "Internal server error" });
-  }
-};
 export const slogin = async (req, res) => {
   const { username, password } = req.body;
 
@@ -134,7 +57,7 @@ export const getStudent = async (req, res) => {
     const students = await Student.find().populate('modules');
     if (!students || students.length === 0) {
       return res.status(404).json({ message: 'No students found' });
-    }
+    } 
     res.json(students);
   } catch (error) {
     res.status(500).json({ message: 'Server error' });
@@ -154,5 +77,84 @@ export const verifyStudent = async (req, res) => {
     res.json({ message: 'Student verified successfully', student });
   } catch (error) {
     res.status(500).json({ message: 'Server error', error });
+  }
+};
+
+
+
+function generateStudentCode() {
+  const prefix = "STU";
+  const randomNumber = Math.floor(1000 + Math.random() * 9000); 
+  return `${prefix}-${randomNumber}-${Date.now().toString().slice(-4)}`; //  STU-1234-5678
+}
+
+export const sregister = async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+
+  const { first_name, last_name, birth_day, contact_no, email, department, level, username, password } = req.body;
+
+  try {
+   
+    const existingStudent = await Student.findOne({ $or: [{ email }, { username }] });
+    if (existingStudent) return res.status(409).json("Student already exists!");
+
+    
+    const studentCode = generateStudentCode();
+
+    
+    const hash = await bcrypt.hash(password, 12);
+
+   
+    const newStudent = new Student({
+      first_name,
+      last_name,
+      birth_day,
+      contact_no,
+      email,
+      department,
+      level,
+      username,
+      password: hash,
+      student_code: studentCode,
+    });
+
+    await newStudent.save();
+
+    
+    const token = Jwt.sign({ id: newStudent._id }, process.env.JWT_SECRET, { expiresIn: "1h" });
+
+    
+    const { password: _, ...studentData } = newStudent._doc;
+
+    res
+      .cookie("access_token", token, { httpOnly: true, secure: process.env.NODE_ENV === "production" })
+      .status(200)
+      .json({ message: "Student registered successfully!", student: studentData });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+
+export const getStudentWithModules = async (req, res) => {
+  const studentId = req.params.id;
+  
+  try {
+    const student = await Student.findById(studentId).populate({
+      path: 'modules', 
+      select: 'name credits level courseCode lecturer' 
+    });
+    
+    if (!student) {
+      return res.status(404).json({ message: "Student not found" });
+    }
+    
+    res.status(200).json(student);
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching student with modules", error });
   }
 };

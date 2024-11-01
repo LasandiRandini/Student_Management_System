@@ -2,7 +2,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import Swal from 'sweetalert2'; 
 import logo from '../assets/SLT_logo_w.png';
-import image1 from '../assets/image1.png';
+import image1 from '../assets/login .png';
 import { useNavigate } from 'react-router-dom'; 
 
 const Login = () => {
@@ -123,3 +123,4 @@ const Login = () => {
 };
 
 export default Login;
+

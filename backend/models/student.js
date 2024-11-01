@@ -11,7 +11,7 @@ const studentSchema = new mongoose.Schema({
   username: { type: String, required: true },
   password: { type: String, required: true },
   isVerified: { type: Boolean, default: false },
-  
+  student_code: { type: String, unique: true },
   
   modules: [{ type: mongoose.Schema.Types.ObjectId, ref: "Module" }]
 });

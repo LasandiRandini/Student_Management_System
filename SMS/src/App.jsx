@@ -19,6 +19,7 @@ import S_Navbar from "./components/s_navbar";
 import S_Courses from "./student_pages/my_courses";
 import ModuleStudents from "./admin_pages/ModuleStudents";
 
+
 const AdminLayout = () => {
   const navbarHeight = "60px";
   const [isSidebarVisible, setSidebarVisible] = useState(true);

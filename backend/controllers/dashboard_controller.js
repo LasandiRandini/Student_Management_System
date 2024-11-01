@@ -1,4 +1,4 @@
-// Mock data for simplicity; replace with DB queries as needed
+
 export const getDashboardData = async (req, res) => {
     try {
       const data = {
