@@ -46,4 +46,5 @@ router.post("/inquiry", submitInquiry);
 
 router.get("/getinquiries", getInquiries);
 
+
 export default router;

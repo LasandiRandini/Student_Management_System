@@ -30,42 +30,57 @@ const Dashboard = () => {
 
   const handleSearch = async () => {
     try {
-      const { department, level } = user;
+      const { departmentId, level } = user;
       const queryParams = new URLSearchParams();
-
+  
       if (searchTerm) queryParams.append("courseCode", searchTerm);
-      if (department) queryParams.append("departmentId", department);
+      if (departmentId) queryParams.append("departmentId", departmentId);
       if (level) queryParams.append("level", level);
-
+  
       const response = await axios.get(
         `http://localhost:9090/api/student_modules/search?${queryParams.toString()}`
       );
       setFilteredCourses(response.data);
     } catch (error) {
       console.error("Error fetching courses:", error);
-
       Swal.fire({
         icon: "error",
-        title: "Enrollment Failed",
-        text: "You can’t enroll in this course. Please contact support.",
+        title: "Search Failed",
+        text: "Failed to retrieve courses. Please try again.",
         confirmButtonText: "OK",
       });
     }
   };
+ 
   const enrollInCourse = async (moduleId) => {
     const storedUser = JSON.parse(localStorage.getItem("user") || "{}");
     const studentId = storedUser._id;
-
+  
     try {
       await axios.post(`http://localhost:9090/api/student_modules/enroll`, {
         studentId,
         moduleId,
       });
-      alert(`Successfully enrolled in course with ID ${moduleId}`);
+  
+      
+      Swal.fire({
+        icon: 'success',
+        title: 'Enrolled Successfully',
+        text: `You have successfully enrolled in the course with ID ${moduleId}.`,
+        confirmButtonText: 'OK'
+      });
+  
       console.log({ studentId, moduleId });
     } catch (error) {
       console.error("Error enrolling in course:", error);
-      alert("Enrollment failed. Please try again.");
+  
+      
+      Swal.fire({
+        icon: 'error',
+        title: 'Enrollment Failed',
+        text: 'Failed to enroll in the course. Please try again.',
+        confirmButtonText: 'OK'
+      });
     }
   };
   const submitInquiry = async () => {
@@ -222,3 +237,4 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
+
