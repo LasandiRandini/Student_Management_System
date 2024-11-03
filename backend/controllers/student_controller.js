@@ -57,18 +57,21 @@ export const slogin = async (req, res) => {
   try {
     const student = await Student.findOne({ username });
     if (!student) return res.status(404).json("Student not found!");
-
+    
     if (!student.isVerified) {
       return res.status(403).json("Your account is not verified yet.");
     }
+    // console.log("Student:", student);
 
     const isPasswordCorrect = bcrypt.compareSync(password, student.password);
     if (!isPasswordCorrect) return res.status(400).json("Wrong username or password!");
 
     
-    console.log("Student ID:", student._id);
+    // console.log("Student ID:", student._id);
 
-    
+    // const token = Jwt.sign({ id: student._id }, process.env.JWT_SECRET || "defaultSecretKey", {
+    //   expiresIn: "1h",
+    // });
     const token = Jwt.sign({ id: student._id }, process.env.JWT_SECRET || "defaultSecretKey", {
       expiresIn: "1h",
     });

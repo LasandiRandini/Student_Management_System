@@ -45,7 +45,7 @@ export const deleteDepartment = async (req, res) => {
 };
 
 
-
+// Update Department
 export const updateDepartment = async (req, res) => {
   const { id } = req.params;
   const { name, headOfDepartment } = req.body;
@@ -96,7 +96,7 @@ export const getdepartmentnames = async (req, res) => {
 
 
 
-
+// Get total counts for departments, students, and modules
 export const getDashboardMetrics = async (req, res) => {
   try {
     const totalDepartments = await Department.countDocuments();
@@ -113,7 +113,7 @@ export const getDashboardMetrics = async (req, res) => {
   }
 };
 
-
+// Search for department details, including student and course counts
 export const searchDepartment = async (req, res) => {
   try {
     const { departmentName } = req.params;
@@ -137,16 +137,18 @@ export const searchDepartment = async (req, res) => {
 
 
 
+
+// Get department-wise data including total students and modules (courses) in each department
 export const getDepartmentWiseData = async (req, res) => {
   try {
     const departments = await Department.find();
 
     const departmentData = await Promise.all(
       departments.map(async (department) => {
-        
+        // Count students by matching the department field
         const studentCount = await Student.countDocuments({ department: department.name });
 
-        
+        // Count modules (courses) in this department
         const moduleCount = department.modules.length;
 
         return {

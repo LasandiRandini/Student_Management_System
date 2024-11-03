@@ -5,13 +5,13 @@ import { searchModule } from "../controllers/module_controller.js";
 const router = express.Router();
 
 router.get("/dashboardMetrics", getDashboardMetrics);
-
+// router.get("/searchDepartment/:departmentName", searchDepartment);
+// router.get("/searchModule/:moduleName", searchModule);
 /**
  * @swagger
  * /api/departments/searchDepartment/{departmentName}:
  *   get:
  *     summary: Search for department details including student and course counts
- *     description: This endpoint retrieves detailed information about a specific department based on the provided department name. It returns the department's name, the total number of students enrolled, and the number of courses offered. This is particularly useful for administrators and academic staff looking to obtain quick insights into department metrics.
  *     tags: [Department]
  *     parameters:
  *       - in: path
@@ -19,10 +19,10 @@ router.get("/dashboardMetrics", getDashboardMetrics);
  *         schema:
  *           type: string
  *         required: true
- *         description: The name of the department to search for. This parameter is case-sensitive and should match the department's registered name.
+ *         description: Name of the department to search
  *     responses:
  *       200:
- *         description: Successfully retrieved department details, including the name, total number of students enrolled, and the total number of courses offered by the department.
+ *         description: Department details retrieved successfully
  *         content:
  *           application/json:
  *             schema:
@@ -30,17 +30,17 @@ router.get("/dashboardMetrics", getDashboardMetrics);
  *               properties:
  *                 department:
  *                   type: string
- *                   description: The name of the department found in the search.
+ *                   description: Department name
  *                 studentCount:
  *                   type: integer
- *                   description: The total number of students currently enrolled in this department.
+ *                   description: Total number of students in the department
  *                 courseCount:
  *                   type: integer
- *                   description: The total number of courses available within this department.
+ *                   description: Total number of courses in the department
  *       404:
- *         description: The department could not be found in the database.
+ *         description: Department not found
  *       500:
- *         description: An error occurred while attempting to search for the department.
+ *         description: Error searching department
  */
 router.get("/searchDepartment/:departmentName", searchDepartment);
 
@@ -49,7 +49,6 @@ router.get("/searchDepartment/:departmentName", searchDepartment);
  * /api/departments/searchModule/{moduleName}:
  *   get:
  *     summary: Search for module details including student count
- *     description: This endpoint retrieves information about a specific module based on the provided module name. It returns the module's name and the total number of students currently enrolled in that module. This is useful for academic staff to track module enrollment and assess student interest in specific courses.
  *     tags: [Module]
  *     parameters:
  *       - in: path
@@ -57,10 +56,10 @@ router.get("/searchDepartment/:departmentName", searchDepartment);
  *         schema:
  *           type: string
  *         required: true
- *         description: The name of the module to search for. Ensure the name matches exactly as registered.
+ *         description: Name of the module to search
  *     responses:
  *       200:
- *         description: Successfully retrieved module details, including the name and total number of students enrolled in the module.
+ *         description: Module details retrieved successfully
  *         content:
  *           application/json:
  *             schema:
@@ -68,14 +67,14 @@ router.get("/searchDepartment/:departmentName", searchDepartment);
  *               properties:
  *                 module:
  *                   type: string
- *                   description: The name of the module found in the search.
+ *                   description: Module name
  *                 studentCount:
  *                   type: integer
- *                   description: The total number of students currently enrolled in this module.
+ *                   description: Total number of students in the module
  *       404:
- *         description: The module could not be found in the database.
+ *         description: Module not found
  *       500:
- *         description: An error occurred while attempting to search for the module.
+ *         description: Error searching module
  */
 router.get("/searchModule/:moduleName", searchModule);
 

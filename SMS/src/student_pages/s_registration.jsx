@@ -213,9 +213,13 @@ const Registration = () => {
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg"
                   >
                     <option value="">Select a Department</option>
-                    {departments.map((dept) => (
+                    {/* {departments.map((dept) => (
                       <option key={dept._id} value={dept.name}>{dept.name}</option>
-                    ))}
+                    ))} */}
+                    <option value="IT">IT</option>
+                    <option value="SE">SE</option>
+                    <option value="CS">CS</option>
+                    <option value="DS">DS</option>
                   </select>
                 </div>
 

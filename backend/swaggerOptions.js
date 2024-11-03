@@ -1,3 +1,4 @@
+// swaggerOptions.js
 import swaggerJSDoc from "swagger-jsdoc";
 
 const options = {
@@ -10,11 +11,11 @@ const options = {
     },
     servers: [
       {
-        url: "http://localhost:9090/", 
+        url: "http://localhost:9090/", // Base URL for your API
       },
     ],
   },
-  apis: ["./routes/*.js"],
+  apis: ["./routes/*.js"], // Path to your route files
 };
 
 export const swaggerSpec = swaggerJSDoc(options);

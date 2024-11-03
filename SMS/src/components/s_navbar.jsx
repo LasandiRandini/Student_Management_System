@@ -63,7 +63,7 @@ const S_Navbar = () => {
       </nav>
 
       
-      {isChatOpen && user._id && admin._id && ( 
+      {isChatOpen && user._id && ( 
         <div className="fixed bottom-0 right-0 w-96 h-200 bg-white border border-gray-300 shadow-lg p-4">
           <ChatComponent userId={user._id} recipientId={admin._id} role="student" />
 

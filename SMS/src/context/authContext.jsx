@@ -32,6 +32,7 @@ export const AuthContextProvider = ({ children }) => {
 const login = async (values) => {
   try {
     const res = await axios.post("http://localhost:9090/api/students/slogin", values);
+    console.log(res)
     setCurrentUser(res.data);
 
     if (res.data.token) {
