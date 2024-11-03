@@ -21,6 +21,7 @@ import ModuleStudents from "./admin_pages/ModuleStudents";
 import Settings from "./admin_pages/Settings";
 
 
+
 const AdminLayout = () => {
   const navbarHeight = "60px";
   const [isSidebarVisible, setSidebarVisible] = useState(true);
@@ -117,6 +118,7 @@ const router = createBrowserRouter([
     children: [
     { path: "/s_dashboard", element: <S_Dashboard /> },
     {path: "/my_courses", element: <S_Courses /> },
+    
     ]
     ,
   },
@@ -133,6 +135,7 @@ const router = createBrowserRouter([
       { path: "/student_mng", element: <Student /> },
       { path: "/subcourse", element: <SubCourse /> },
       { path: "/Settings", element: <Settings /> },
+      
 
     ],
   },

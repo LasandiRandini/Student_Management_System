@@ -158,7 +158,7 @@ const Dashboard = () => {
                     {course.name}
                   </span>
                   <button
-                    onClick={() => enrollInCourse(course._id)} // Correctly passing moduleId
+                    onClick={() => enrollInCourse(course._id)} 
                     className="bg-green-600 text-white py-1 px-3 rounded hover:bg-green-700"
                   >
                     Enroll

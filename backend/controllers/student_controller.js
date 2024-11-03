@@ -17,36 +17,75 @@ export const validateStudent = [
 ];
 
 
+// export const slogin = async (req, res) => {
+//   const { username, password } = req.body;
+
+//   try {
+ 
+//     const student = await Student.findOne({ username });
+//     if (!student) return res.status(404).json("Student not found!");
+
+    
+//     if (!student.isVerified) {
+//       return res.status(403).json("Your account is not verified yet.");
+//     }
+
+    
+//     const isPasswordCorrect = bcrypt.compareSync(password, student.password);
+//     if (!isPasswordCorrect) return res.status(400).json("Wrong username or password!");
+
+    
+//     const token = Jwt.sign({ id: student._id }, process.env.JWT_SECRET || "defaultSecretKey", {
+//       expiresIn: "1h",
+//     });
+
+//     const { password: _, ...other } = student._doc; 
+
+    
+//     res
+//       .cookie("access_token", token, { httpOnly: true, secure: process.env.NODE_ENV === "production" }) // Ensure cookies are secure in production
+//       .status(200)
+//       .json(other);
+//   } catch (err) {
+//     return res.status(500).json({ error: "Something went wrong", details: err.message });
+//   }
+// };
+
 export const slogin = async (req, res) => {
   const { username, password } = req.body;
 
   try {
- 
     const student = await Student.findOne({ username });
     if (!student) return res.status(404).json("Student not found!");
 
-    
     if (!student.isVerified) {
       return res.status(403).json("Your account is not verified yet.");
     }
 
-    
     const isPasswordCorrect = bcrypt.compareSync(password, student.password);
     if (!isPasswordCorrect) return res.status(400).json("Wrong username or password!");
 
     
+    console.log("Student ID:", student._id);
+
+    // const token = Jwt.sign({ id: student._id }, process.env.JWT_SECRET || "defaultSecretKey", {
+    //   expiresIn: "1h",
+    // });
     const token = Jwt.sign({ id: student._id }, process.env.JWT_SECRET || "defaultSecretKey", {
       expiresIn: "1h",
     });
+    if (!token) {
+      return res.status(500).json("Failed to generate token");
+    }
 
-    const { password: _, ...other } = student._doc; 
+    const { password: _, ...other } = student._doc;
 
-    
     res
-      .cookie("access_token", token, { httpOnly: true, secure: process.env.NODE_ENV === "production" }) // Ensure cookies are secure in production
+      .cookie("access_token", token, { httpOnly: true, secure: process.env.NODE_ENV === "production" })
       .status(200)
       .json(other);
   } catch (err) {
+    console.error("Error during login:", err);
     return res.status(500).json({ error: "Something went wrong", details: err.message });
   }
 };
