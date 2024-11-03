@@ -68,9 +68,7 @@ export const slogin = async (req, res) => {
     
     console.log("Student ID:", student._id);
 
-    // const token = Jwt.sign({ id: student._id }, process.env.JWT_SECRET || "defaultSecretKey", {
-    //   expiresIn: "1h",
-    // });
+    
     const token = Jwt.sign({ id: student._id }, process.env.JWT_SECRET || "defaultSecretKey", {
       expiresIn: "1h",
     });

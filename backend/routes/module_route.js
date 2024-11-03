@@ -13,6 +13,7 @@ router.get("/getmodule/:departmentId/:level", getModule);
  * /api/modules/createmodule:
  *   post:
  *     summary: Create a new module
+ *     description: This endpoint allows you to create a new module by providing details such as the module name, description, the department ID it belongs to, the education level, and an optional image file. Make sure the `departmentId` corresponds to an existing department and that the image is uploaded as a binary file.
  *     tags: [Module]
  *     requestBody:
  *       required: true
@@ -23,20 +24,25 @@ router.get("/getmodule/:departmentId/:level", getModule);
  *             properties:
  *               name:
  *                 type: string
- *                 description: Name of the module
+ *                 description: The name of the module (e.g., "Advanced Mathematics")
  *               description:
  *                 type: string
- *                 description: Description of the module
+ *                 description: A brief description of the module's content or purpose (e.g., "Covers advanced calculus and algebra topics")
  *               departmentId:
  *                 type: string
- *                 description: ID of the department the module belongs to
+ *                 description: The unique ID of the department the module is associated with (e.g., "12345")
  *               level:
  *                 type: string
- *                 description: Education level of the module
+ *                 description: The education level of the module (e.g., "Undergraduate" or "Postgraduate")
  *               image:
  *                 type: string
  *                 format: binary
- *                 description: Image file for the module
+ *                 description: An optional image file representing the module (e.g., course cover image)
+ *             example:
+ *               name: "Physics 101"
+ *               description: "Introduction to basic principles of physics"
+ *               departmentId: "abc123"
+ *               level: "Undergraduate"
  *     responses:
  *       200:
  *         description: Module created successfully
@@ -47,14 +53,14 @@ router.get("/getmodule/:departmentId/:level", getModule);
  *               properties:
  *                 message:
  *                   type: string
- *                   description: Success message
+ *                   description: Success message (e.g., "Module created successfully")
  *                 module:
  *                   type: object
- *                   description: Created module details
+ *                   description: The details of the created module
  *       400:
- *         description: Validation error, such as missing fields
+ *         description: Validation error, such as missing or invalid fields
  *       500:
- *         description: Internal server error
+ *         description: Internal server error, such as a server-side failure or database issue
  */
 router.post("/createmodule", uploadModuleImage, createModule);
 

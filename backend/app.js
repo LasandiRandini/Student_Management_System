@@ -272,73 +272,7 @@ mongoose
 let rabbitChannel;
 const userSockets = {}; 
 
-// const setupRabbitMQ = async () => {
-//   try {
-//     const connection = await amqp.connect("amqp://localhost");
-//     rabbitChannel = await connection.createChannel();
-//     console.log("RabbitMQ connected");
 
-//     connection.on("close", () => {
-//       console.error("RabbitMQ connection closed. Reconnecting...");
-//       setTimeout(setupRabbitMQ, 1000);
-//     });
-
-//     connection.on("error", (error) => {
-//       console.error("RabbitMQ error:", error);
-//     });
-//   } catch (error) {
-//     console.error("Failed to connect to RabbitMQ:", error);
-//     setTimeout(setupRabbitMQ, 1000);
-//   }
-// };
-
-// setupRabbitMQ();
-
-
-// io.on("connection", (socket) => {
-//   console.log("A user connected:", socket.id);
-
-  
-//   socket.on("register", async (userId) => {
-//     if (!userId) {
-//       console.warn(`Register event received without userId for socket ${socket.id}`);
-//       return;
-//     }
-
-    
-//     socket.userId = userId;
-//     userSockets[userId] = socket.id;
-//     console.log(`User ${userId} registered with socket ID ${socket.id}`);
-//   });
-
-  
-//   socket.on("disconnect", () => {
-//     if (socket.userId) {
-//       console.log(`User disconnected: ${socket.id}, User ID: ${socket.userId}`);
-//       if (userSockets[socket.userId] === socket.id) {
-//         delete userSockets[socket.userId];
-//       }
-//     } else {
-//       console.warn(`Socket disconnected without user ID: ${socket.id}`);
-//     }
-//   });
-
-  
-//   socket.on("sendMessage", async (messageData) => {
-//     const { sender, recipient, content } = messageData;
-//     const recipientSocketId = userSockets[recipient];
-
-//     if (recipientSocketId) {
-//       io.to(recipientSocketId).emit("receiveMessage", messageData);
-//       console.log(`Message sent from ${sender} to ${recipient} (Socket ID: ${recipientSocketId})`);
-//     } else {
-//       console.warn(`Recipient ${recipient} is not online or not registered with a socket ID.`);
-      
-//     }
-//   });
-// });
-
-// RabbitMQ Setup
 const setupRabbitMQ = async () => {
   try {
     const connection = await amqp.connect("amqp://localhost");
@@ -361,38 +295,38 @@ const setupRabbitMQ = async () => {
 
 setupRabbitMQ();
 
-// Socket.io Setup
+
 io.on("connection", (socket) => {
   console.log("A user connected:", socket.id);
 
-  // Set a timeout for registration
+  
   const registrationTimeout = setTimeout(() => {
     if (!socket.userId) {
       console.warn(`Socket ${socket.id} did not register within the allowed time. Disconnecting...`);
       socket.disconnect(true);
     }
-  }, 5000); // Disconnect after 5 seconds if not registered
+  }, 5000); 
 
-  // Handle the 'register' event to associate userId with socket
+ 
   socket.on("register", async (userId) => {
     if (!userId) {
       console.warn(`Register event received without userId for socket ${socket.id}`);
       return;
     }
 
-    clearTimeout(registrationTimeout); // Clear the timeout as the user has registered
+    clearTimeout(registrationTimeout); 
 
-    // Associate the userId with the socket
+    
     socket.userId = userId;
     userSockets[userId] = socket.id;
     console.log(`User ${userId} registered with socket ID ${socket.id}`);
   });
 
-  // Handle disconnection
+ 
   socket.on("disconnect", () => {
     if (socket.userId) {
       console.log(`User disconnected: ${socket.id}, User ID: ${socket.userId}`);
-      // Ensure we remove only the socket ID associated with this userId
+      
       if (userSockets[socket.userId] === socket.id) {
         delete userSockets[socket.userId];
       }
@@ -401,19 +335,19 @@ io.on("connection", (socket) => {
     }
   });
 
-  // Handle sending messages
+  
   socket.on("sendMessage", async (messageData) => {
     const { sender, recipient, content } = messageData;
     const recipientSocketId = userSockets[recipient];
 
     if (recipientSocketId) {
-      // If recipient is online, send the message
+      
       io.to(recipientSocketId).emit("receiveMessage", messageData);
       console.log(`Message sent from ${sender} to ${recipient} (Socket ID: ${recipientSocketId})`);
     } else {
       console.warn(`Recipient ${recipient} is not online or not registered with a socket ID.`);
       
-      // Optional: Store the message in RabbitMQ or a database for offline delivery
+     
     }
   });
 });

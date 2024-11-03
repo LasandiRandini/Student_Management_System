@@ -1,347 +1,3 @@
-// import { useState, useEffect } from "react";
-// import { FaUniversity } from "react-icons/fa";
-// import axios from "axios";
-// import { useNavigate } from "react-router-dom"; 
-
-// const Department = () => {
-//   const [showForm, setShowForm] = useState(false);
-//   const [departmentName, setDepartmentName] = useState("");
-//   const [departmentHead, setDepartmentHead] = useState("");
-//   const [departments, setDepartments] = useState([]);
-//   const navigate = useNavigate();
-
-//   const fetchDepartments = async () => {
-//     try {
-//       const response = await axios.get('http://localhost:9090/api/departments/getdepartment');
-//       setDepartments(response.data); 
-//     } catch (error) {
-//       console.error("Error fetching departments: ", error);
-//     }
-//   };
-
-//   useEffect(() => {
-//     fetchDepartments();
-//   }, []);
-
-//   const handleAddDepartment = async (e) => {
-//     e.preventDefault();
-//     try {
-//       const response = await axios.post('http://localhost:8080/api/departments/createdepartment', {
-//         name: departmentName,
-//         headOfDepartment: departmentHead
-//       });
-//       console.log(response.data);
-//       setShowForm(false);
-//       alert("Department added successfully!");
-//       fetchDepartments(); 
-//     } catch (error) {
-//       console.error("Error adding department: ", error);
-//       alert("Error adding department");
-//     }
-//   };
-
-//   const handleNavigateToModules = (departmentId, level) => {
-//     navigate(`/courses/${departmentId}/${level}`);
-//   };
-
-//   return (
-//     <div className="p-4">
-//       <div className="flex justify-between items-center mb-6">
-//         <h1 className="text-3xl font-bold text-blue-600">All Departments</h1>
-//         <button 
-//           className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition"
-//           onClick={() => setShowForm(!showForm)}
-//         >
-//           Add Department
-//         </button>
-//       </div>
-
-//       {showForm && (
-//         <form onSubmit={handleAddDepartment} className="mb-6">
-//           <div className="flex items-center space-x-4">
-//             <input
-//               type="text"
-//               value={departmentName}
-//               onChange={(e) => setDepartmentName(e.target.value)}
-//               placeholder="Department Name"
-//               className="border border-gray-300 rounded px-4 py-2"
-//               required
-//             />
-//             <input
-//               type="text"
-//               value={departmentHead}
-//               onChange={(e) => setDepartmentHead(e.target.value)}
-//               placeholder="Department Head"
-//               className="border border-gray-300 rounded px-4 py-2"
-//               required
-//             />
-//             <button
-//               type="submit"
-//               className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition"
-//             >
-//               Save Department
-//             </button>
-//           </div>
-//         </form>
-//       )}
-
-//       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-//         {departments.map((department) => (
-//           <div
-//             key={department._id}
-//             className="bg-white shadow-lg rounded-lg p-6 flex flex-col items-center space-y-4 transition hover:shadow-xl"
-//           >
-//             <div className="bg-blue-500 text-white p-4 rounded-full">
-//               <FaUniversity className="text-3xl" />
-//             </div>
-
-//             <h2 className="text-xl font-semibold">{department.name}</h2>
-//             <p className="text-gray-600">Head: {department.headOfDepartment}</p>
-
-           
-//             <div className="flex space-x-2">
-//               <button 
-//                 className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition"
-//                 onClick={() => handleNavigateToModules(department._id, 1)}
-//               >
-//                 Level 1
-//               </button>
-//               <button 
-//                 className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition"
-//                 onClick={() => handleNavigateToModules(department._id, 2)}
-//               >
-//                 Level 2
-//               </button>
-//               <button 
-//                 className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition"
-//                 onClick={() => handleNavigateToModules(department._id, 3)}
-//               >
-//                 Level 3
-//               </button>
-//               <button 
-//                 className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition"
-//                 onClick={() => handleNavigateToModules(department._id, 4)}
-//               >
-//                 Level 4
-//               </button>
-//             </div>
-//           </div>
-//         ))}
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default Department;
-
-// import { useState, useEffect } from "react";
-// import { FaUniversity } from "react-icons/fa";
-// import Swal from 'sweetalert2';
-// import axios from "axios";
-// import { useNavigate } from "react-router-dom"; 
-
-// const Department = () => {
-//   const [showForm, setShowForm] = useState(false);
-//   const [departmentName, setDepartmentName] = useState("");
-//   const [departmentHead, setDepartmentHead] = useState("");
-//   const [departments, setDepartments] = useState([]);
-//   const navigate = useNavigate();
-
-//   const fetchDepartments = async () => {
-//     try {
-//       const response = await axios.get('http://localhost:9090/api/departments/getdepartment');
-//       setDepartments(response.data); 
-//     } catch (error) {
-//       console.error("Error fetching departments: ", error);
-//     }
-//   };
-
-//   useEffect(() => {
-//     fetchDepartments();
-//   }, []);
-
-//   const handleAddDepartment = async (e) => {
-//     e.preventDefault();
-//     try {
-//       const response = await axios.post('http://localhost:9090/api/departments/createdepartment', {
-//         name: departmentName,
-//         headOfDepartment: departmentHead
-//       });
-//       setShowForm(false);
-//       alert("Department added successfully!");
-//       fetchDepartments(); 
-//     } catch (error) {
-//       console.error("Error adding department: ", error);
-//       alert("Error adding department");
-//     }
-//   };
-
-//   // const handleAddDepartment = async (e) => {
-//   //   e.preventDefault();
-//   //   try {
-//   //     const response = await axios.post('http://localhost:9090/api/departments/createdepartment', {
-//   //       name: departmentName,
-//   //       headOfDepartment: departmentHead
-//   //     });
-//   //     setShowForm(false);
-//   //     Swal.fire({
-//   //       icon: 'success',
-//   //       title: 'Department added successfully!',
-//   //       showConfirmButton: false,
-//   //       timer: 1500
-//   //     });
-//   //     fetchDepartments(); 
-//   //   } catch (error) {
-//   //     console.error("Error adding department: ", error);
-//   //     Swal.fire({
-//   //       icon: 'error',
-//   //       title: 'Error',
-//   //       text: 'Error adding department',
-//   //     });
-//   //   }
-//   // };
-//   // const handleDeleteDepartment = async (departmentId) => {
-//   //   try {
-//   //     await axios.delete(`http://localhost:9090/api/departments/deletedepartment/${departmentId}`);
-//   //     alert("Department deleted successfully!");
-//   //     fetchDepartments();
-//   //   } catch (error) {
-//   //     console.error("Error deleting department: ", error);
-//   //     alert("Error deleting department");
-//   //   }
-//   // };
-
-//   const handleDeleteDepartment = async (departmentId) => {
-//     try {
-//       const result = await Swal.fire({
-//         title: 'Are you sure?',
-//         text: "You won't be able to revert this!",
-//         icon: 'warning',
-//         showCancelButton: true,
-//         confirmButtonColor: '#3085d6',
-//         cancelButtonColor: '#d33',
-//         confirmButtonText: 'Yes, delete it!'
-//       });
-
-//       if (result.isConfirmed) {
-//         await axios.delete(`http://localhost:9090/api/departments/deletedepartment/${departmentId}`);
-//         Swal.fire({
-//           icon: 'success',
-//           title: 'Deleted!',
-//           text: 'Department deleted successfully!',
-//           showConfirmButton: false,
-//           timer: 1500
-//         });
-//         fetchDepartments();
-//       }
-//     } catch (error) {
-//       console.error("Error deleting department: ", error);
-//       Swal.fire({
-//         icon: 'error',
-//         title: 'Error',
-//         text: 'Error deleting department',
-//       });
-//     }
-//   };
-//   const handleNavigateToModules = (departmentId, level) => {
-//     navigate(`/courses/${departmentId}/${level}`);
-//   };
-
-//   return (
-//     <div className="p-4">
-//       <div className="flex justify-between items-center mb-6">
-//         <h1 className="text-3xl font-bold text-blue-600">All Departments</h1>
-//         <button 
-//           className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition"
-//           onClick={() => setShowForm(!showForm)}
-//         >
-//           Add Department
-//         </button>
-//       </div>
-
-//       {showForm && (
-//         <form onSubmit={handleAddDepartment} className="mb-6">
-//           <div className="flex items-center space-x-4">
-//             <input
-//               type="text"
-//               value={departmentName}
-//               onChange={(e) => setDepartmentName(e.target.value)}
-//               placeholder="Department Name"
-//               className="border border-gray-300 rounded px-4 py-2"
-//               required
-//             />
-//             <input
-//               type="text"
-//               value={departmentHead}
-//               onChange={(e) => setDepartmentHead(e.target.value)}
-//               placeholder="Department Head"
-//               className="border border-gray-300 rounded px-4 py-2"
-//               required
-//             />
-//             <button
-//               type="submit"
-//               className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition"
-//             >
-//               Save Department
-//             </button>
-//           </div>
-//         </form>
-//       )}
-
-//       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-//         {departments.map((department) => (
-//           <div
-//             key={department._id}
-//             className="bg-white shadow-lg rounded-lg p-6 flex flex-col items-center space-y-4 transition hover:shadow-xl"
-//           >
-//             <div className="bg-blue-500 text-white p-4 rounded-full">
-//               <FaUniversity className="text-3xl" />
-//             </div>
-
-//             <h2 className="text-xl font-semibold">{department.name}</h2>
-//             <p className="text-gray-600">Head: {department.headOfDepartment}</p>
-
-//             <div className="flex space-x-2">
-//               <button 
-//                 className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition"
-//                 onClick={() => handleNavigateToModules(department._id, 1)}
-//               >
-//                 Level 1
-//               </button>
-//               <button 
-//                 className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition"
-//                 onClick={() => handleNavigateToModules(department._id, 2)}
-//               >
-//                 Level 2
-//               </button>
-//               <button 
-//                 className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition"
-//                 onClick={() => handleNavigateToModules(department._id, 3)}
-//               >
-//                 Level 3
-//               </button>
-//               <button 
-//                 className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition"
-//                 onClick={() => handleNavigateToModules(department._id, 4)}
-//               >
-//                 Level 4
-//               </button>
-//             </div>
-//             <button
-//               className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition mt-4"
-//               onClick={() => handleDeleteDepartment(department._id)}
-//             >
-//               Delete Department
-//             </button>
-//           </div>
-//         ))}
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default Department;
-
 import { useState, useEffect } from "react";
 import { FaUniversity } from "react-icons/fa";
 import Swal from 'sweetalert2';
@@ -350,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 const Department = () => {
   const [showForm, setShowForm] = useState(false);
-  const [departmentId, setDepartmentId] = useState(null); // To hold selected department ID for update
+  const [departmentId, setDepartmentId] = useState(null); 
   const [departmentName, setDepartmentName] = useState("");
   const [departmentHead, setDepartmentHead] = useState("");
   const [departments, setDepartments] = useState([]);
@@ -373,7 +29,7 @@ const Department = () => {
     e.preventDefault();
     try {
       if (departmentId) {
-        // Update department if departmentId is set
+        
         await axios.put(`http://localhost:9090/api/departments/updatedepartment/${departmentId}`, {
           name: departmentName,
           headOfDepartment: departmentHead
@@ -385,7 +41,7 @@ const Department = () => {
           timer: 1500
         });
       } else {
-        // Create a new department
+       
         await axios.post('http://localhost:9090/api/departments/createdepartment', {
           name: departmentName,
           headOfDepartment: departmentHead
@@ -398,7 +54,7 @@ const Department = () => {
         });
       }
       setShowForm(false);
-      setDepartmentId(null); // Clear the form after submission
+      setDepartmentId(null); 
       setDepartmentName("");
       setDepartmentHead("");
       fetchDepartments();
@@ -464,7 +120,7 @@ const Department = () => {
           className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition"
           onClick={() => {
             setShowForm(!showForm);
-            setDepartmentId(null); // Reset form for new entry
+            setDepartmentId(null); 
             setDepartmentName("");
             setDepartmentHead("");
           }}

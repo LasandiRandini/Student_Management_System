@@ -69,50 +69,9 @@ export const getStudentModules = async (req, res) => {
       res.status(500).json({ message: "Failed to unenroll student from module.", error });
     }
   };
+ 
   
-
-  // export const searchCourses = async (req, res) => {
-  //   const { courseCode, departmentId, level } = req.query;
-  
-  //   try {
-     
-  //     if (!courseCode) { 
-  //       return res.status(400).json({ message: "Course code is required for search." });
-  //     }
-  
-     
-  //     const query = {
-  //       courseCode: { $regex: courseCode, $options: "i" }  
-  //     };
-  
-      
-  //     if (departmentId) {
-  //       query.department = departmentId;
-  //     }
-  
-      
-  //     if (level) {
-  //       query.level = level;
-  //     }
-  
-     
-
-  //     const courses = await Module.find(query);
-  
-      
-  //     if (courses.length === 0) {
-  //       return res.status(404).json({ message: "No courses found with the given search criteria." });
-  //     }
-  
-     
-  //     res.status(200).json(courses);
-  //   } catch (error) {
-  //     console.error("Error searching for courses:", error);
-  //     res.status(500).json({ message: "Failed to search for courses.", error });
-  //   }
-  // };
-  
-  export const searchCourses = async (req, res) => {
+export const searchCourses = async (req, res) => {
     const { courseCode, departmentId, level } = req.query;
   
     try {
