@@ -132,10 +132,12 @@ import image1 from '../assets/login .png';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/authContext';
 
+
+
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const { login } = useContext(AuthContext); // Use the login function from context
+  const { login } = useContext(AuthContext); 
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {

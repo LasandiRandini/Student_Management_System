@@ -19,8 +19,11 @@ import S_Navbar from "./components/s_navbar";
 import S_Courses from "./student_pages/my_courses";
 import ModuleStudents from "./admin_pages/ModuleStudents";
 import Settings from "./admin_pages/Settings";
-
-
+import AdminNotifications from "./admin_pages/AdminNotifications";
+import StudentNotifications from "./student_pages/StudentNotifications";
+import Assignment from "./student_pages/assignment";
+import Exam from "./student_pages/exam";
+import Event from "./student_pages/event";
 
 const AdminLayout = () => {
   const navbarHeight = "60px";
@@ -118,7 +121,10 @@ const router = createBrowserRouter([
     children: [
     { path: "/s_dashboard", element: <S_Dashboard /> },
     {path: "/my_courses", element: <S_Courses /> },
-    
+    {path: "/SNotification", element: <StudentNotifications /> },
+    {path: "/assignments", element: <Assignment /> },
+    {path: "/results", element: <Exam /> },
+    {path: "/events", element: <Event /> },
     ]
     ,
   },
@@ -135,7 +141,7 @@ const router = createBrowserRouter([
       { path: "/student_mng", element: <Student /> },
       { path: "/subcourse", element: <SubCourse /> },
       { path: "/Settings", element: <Settings /> },
-      
+      { path: "/ANotification", element: <AdminNotifications /> },
 
     ],
   },

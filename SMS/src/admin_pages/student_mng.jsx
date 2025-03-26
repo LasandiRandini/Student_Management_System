@@ -136,6 +136,7 @@ const TableComponent = () => {
                 <th className="border border-gray-300 p-2">Department</th>
                 <th className="border border-gray-300 p-2">Current Level</th>
                 <th className="border border-gray-300 p-2">Modules</th>
+                <th className="border border-gray-300 p-2">Message</th>
                 <th className="border border-gray-300 p-2">Verification</th>
               </tr>
             </thead>

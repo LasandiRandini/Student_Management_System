@@ -1,5 +1,5 @@
 import express from "express"
-import { slogin,sregister, getStudent, verifyStudent, getStudentWithModules} from "../controllers/student_controller.js"
+import { slogin,sregister, getStudent, verifyStudent, getStudentWithModules, getStudentsByDepartmentAndLevel} from "../controllers/student_controller.js"
 
 const router = express.Router();
 
@@ -118,6 +118,9 @@ router.post("/sregister", sregister);
 router.put("/verify/:id", verifyStudent);
 
 router.get('/:id/modules', getStudentWithModules);
+router.get("/getldstudents/:departmentId/:level", getStudentsByDepartmentAndLevel);
+
+
 export default router;
 
 

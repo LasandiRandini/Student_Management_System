@@ -11,7 +11,7 @@
 
 // admin_route.js
 import express from "express";
-import { alogin, aregister } from "../controllers/admin_controller.js";
+import { alogin, aregister,sendEventReminder,sendExamResult, sendAssessmentReminder,sendNotification } from "../controllers/admin_controller.js";
 
 const router = express.Router();
 
@@ -98,5 +98,10 @@ router.post("/alogin", alogin);
  *         description: Internal server error
  */
 router.post("/aregister", aregister);
+router.post("/send-event", sendEventReminder);
+router.post("/send-result", sendExamResult);
+router.post("/send-assessment", sendAssessmentReminder);
+router.post("/sendNotification", sendNotification);
+
 
 export default router;
